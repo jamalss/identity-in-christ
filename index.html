@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Am In Christ — Identity Affirmations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dawn-void:#14132B;
+    --dusk-plum:#3D2A4C;
+    --ember:#E85D3D;
+    --amber:#F4A93B;
+    --sunglow:#FFE3B0;
+    --paper:#FFF8EE;
+    --ink:#2B1B22;
+    --ink-soft:#6b5a5e;
+    --line:rgba(255,227,176,0.18);
+    --max:860px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Manrope',sans-serif;
+    color:var(--sunglow);
+    background:var(--dawn-void);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--ember);color:var(--paper);}
+
+  /* ---------- SKY / HERO ---------- */
+  .sky{
+    position:relative;
+    overflow:hidden;
+    padding:64px 24px 40px;
+    background:
+      radial-gradient(ellipse 120% 80% at 50% 115%, var(--amber) 0%, var(--ember) 22%, var(--dusk-plum) 52%, var(--dawn-void) 78%);
+    text-align:center;
+  }
+  .sunburst{
+    position:absolute;
+    left:50%;
+    bottom:-10%;
+    width:900px;
+    max-width:220vw;
+    height:900px;
+    transform:translateX(-50%);
+    opacity:0.55;
+    animation:spin 120s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes spin{ to{ transform:translateX(-50%) rotate(360deg); } }
+  @media (prefers-reduced-motion:reduce){ .sunburst{ animation:none; } }
+
+  .sun-disc{
+    position:absolute;
+    left:50%;
+    bottom:-70px;
+    width:150px;
+    height:150px;
+    transform:translateX(-50%);
+    border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #FFF3D6, var(--amber) 55%, var(--ember) 100%);
+    box-shadow:0 0 90px 20px rgba(244,169,59,0.55);
+  }
+
+  .eyebrow{
+    position:relative;
+    z-index:2;
+    font-size:12px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--sunglow);
+    opacity:0.75;
+    font-weight:700;
+    margin:0 0 18px;
+  }
+  h1{
+    position:relative;
+    z-index:2;
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:clamp(2.4rem, 6vw, 4.2rem);
+    line-height:1.05;
+    margin:0 0 14px;
+    color:#fff;
+    text-shadow:0 2px 30px rgba(0,0,0,0.25);
+  }
+  .sub{
+    position:relative;
+    z-index:2;
+    max-width:520px;
+    margin:0 auto;
+    font-size:15px;
+    line-height:1.6;
+    color:var(--sunglow);
+    opacity:0.85;
+  }
+
+  /* ---------- TABS ---------- */
+  nav.tabs{
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:flex;
+    justify-content:center;
+    gap:4px;
+    background:rgba(20,19,43,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:10px 12px;
+  }
+  nav.tabs button{
+    font-family:'Manrope',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.04em;
+    background:none;
+    border:none;
+    color:var(--sunglow);
+    opacity:0.55;
+    padding:10px 18px;
+    cursor:pointer;
+    border-radius:999px;
+    transition:opacity .2s, background .2s, color .2s;
+  }
+  nav.tabs button:hover{opacity:0.85;}
+  nav.tabs button.active{
+    opacity:1;
+    background:linear-gradient(135deg, var(--ember), var(--amber));
+    color:#1a1310;
+  }
+  nav.tabs button:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:2px;
+  }
+
+  main{max-width:var(--max); margin:0 auto; padding:40px 20px 90px;}
+  section{display:none;}
+  section.active{display:block; animation:fadeUp .35s ease both;}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  @media (prefers-reduced-motion:reduce){ section.active{animation:none;} }
+
+  /* ---------- CARD (shared) ---------- */
+  .card{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:22px;
+    padding:40px 34px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    top:-40%; right:-20%;
+    width:260px; height:260px;
+    background:radial-gradient(circle, rgba(232,93,61,0.13), transparent 70%);
+    pointer-events:none;
+  }
+  .lead-tag{
+    display:inline-block;
+    font-family:'Manrope',sans-serif;
+    font-weight:800;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ember);
+    background:rgba(232,93,61,0.1);
+    padding:6px 12px;
+    border-radius:999px;
+    margin-bottom:18px;
+  }
+  .stmt{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(1.4rem, 3.4vw, 2.05rem);
+    line-height:1.32;
+    margin:0 0 22px;
+  }
+  .ref{
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+    letter-spacing:0.02em;
+  }
+
+  /* ---------- MEDITATE ---------- */
+  #meditate .card{min-height:280px; display:flex; flex-direction:column; justify-content:center;}
+  .med-controls{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin-top:28px;
+  }
+  .med-controls button{
+    font-family:'Manrope',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    border:1px solid var(--line);
+    background:rgba(255,227,176,0.06);
+    color:var(--sunglow);
+    padding:11px 20px;
+    border-radius:12px;
+    cursor:pointer;
+    transition:background .2s, transform .15s;
+  }
+  .med-controls button:hover{background:rgba(255,227,176,0.14);}
+  .med-controls button:active{transform:scale(0.96);}
+  .med-controls button.primary{
+    background:linear-gradient(135deg, var(--ember), var(--amber));
+    color:#1a1310;
+    border:none;
+  }
+  .med-count{
+    text-align:center;
+    font-size:12px;
+    color:var(--sunglow);
+    opacity:0.6;
+    margin-top:10px;
+    letter-spacing:0.04em;
+  }
+
+  .arc-wrap{margin:34px auto 0; max-width:420px;}
+  .arc-wrap svg{width:100%; height:auto; display:block;}
+
+  /* ---------- BROWSE ---------- */
+  .browse-controls{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-bottom:26px;
+  }
+  #search{
+    width:100%;
+    font-family:'Manrope',sans-serif;
+    font-size:15px;
+    padding:14px 18px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:rgba(255,227,176,0.06);
+    color:var(--sunglow);
+  }
+  #search::placeholder{color:rgba(255,227,176,0.45);}
+  .filter-row{display:flex; flex-wrap:wrap; gap:8px; align-items:center;}
+  .chip{
+    font-family:'Manrope',sans-serif;
+    font-size:12.5px;
+    font-weight:700;
+    padding:8px 14px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--sunglow);
+    opacity:0.65;
+    cursor:pointer;
+    transition:all .2s;
+  }
+  .chip:hover{opacity:0.9;}
+  .chip.active{
+    opacity:1;
+    background:var(--sunglow);
+    color:var(--dawn-void);
+    border-color:var(--sunglow);
+  }
+  select#bookFilter{
+    font-family:'Manrope',sans-serif;
+    font-size:12.5px;
+    font-weight:700;
+    padding:9px 12px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--dawn-void);
+    color:var(--sunglow);
+  }
+  .result-count{
+    font-size:12px;
+    color:var(--sunglow);
+    opacity:0.55;
+    margin:2px 2px 18px;
+  }
+  .grid{display:grid; grid-template-columns:1fr; gap:14px;}
+  .grid .card{padding:24px 26px;}
+  .grid .stmt{font-size:1.08rem; margin-bottom:10px;}
+  .grid .lead-tag{margin-bottom:10px;}
+  .empty-state{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--sunglow);
+    opacity:0.55;
+    font-size:14px;
+  }
+
+  /* ---------- TODAY ---------- */
+  #today .card{text-align:center;}
+  #today .date{
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-weight:800;
+    margin-bottom:16px;
+  }
+  #today .stmt{font-size:clamp(1.6rem, 4vw, 2.3rem);}
+  .today-note{
+    text-align:center;
+    font-size:12.5px;
+    color:var(--sunglow);
+    opacity:0.55;
+    margin-top:20px;
+  }
+  .today-note button{
+    background:none; border:none; color:var(--amber);
+    font-weight:700; cursor:pointer; text-decoration:underline;
+    font-family:'Manrope',sans-serif; font-size:12.5px;
+    padding:0;
+  }
+
+  footer{
+    text-align:center;
+    padding:36px 20px 50px;
+    font-size:12px;
+    color:var(--sunglow);
+    opacity:0.4;
+    letter-spacing:0.03em;
+  }
+
+  @media (max-width:520px){
+    .card{padding:28px 22px;}
+    .med-controls{flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sky">
+  <svg class="sunburst" viewBox="0 0 900 900" aria-hidden="true">
+    <g stroke="#FFE3B0" stroke-width="1.4" opacity="0.5">
+      <!-- rays generated via JS below is overkill; static set is fine -->
+    </g>
+  </svg>
+  <div class="sun-disc" aria-hidden="true"></div>
+  <p class="eyebrow">A study in identity</p>
+  <h1>I Am In Christ</h1>
+  <p class="sub">Every line here is a truth Scripture already says about you. Not a mood, not a mantra — a record. Read slowly.</p>
+</div>
+
+<nav class="tabs" role="tablist" aria-label="Study modes">
+  <button class="active" data-tab="meditate" role="tab" aria-selected="true">Meditate</button>
+  <button data-tab="browse" role="tab" aria-selected="false">Browse</button>
+  <button data-tab="today" role="tab" aria-selected="false">Today</button>
+</nav>
+
+<main>
+
+  <!-- MEDITATE -->
+  <section id="meditate" class="active">
+    <div class="card">
+      <span class="lead-tag" id="medLead">I am</span>
+      <p class="stmt" id="medStmt">Loading…</p>
+      <p class="ref" id="medRef"></p>
+    </div>
+    <div class="med-controls">
+      <button id="medPrev">← Prev</button>
+      <button id="medShuffle">Shuffle</button>
+      <button id="medNext" class="primary">Next →</button>
+    </div>
+    <p class="med-count" id="medCount"></p>
+    <div class="arc-wrap">
+      <svg viewBox="0 0 400 130" aria-hidden="true">
+        <path d="M 20 120 A 180 180 0 0 1 380 120" fill="none" stroke="rgba(255,227,176,0.18)" stroke-width="2"/>
+        <path id="arcFill" d="M 20 120 A 180 180 0 0 1 380 120" fill="none" stroke="url(#arcGrad)" stroke-width="2" stroke-dasharray="565" stroke-dashoffset="565"/>
+        <circle id="arcDot" cx="20" cy="120" r="7" fill="#FFE3B0"/>
+        <defs>
+          <linearGradient id="arcGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#E85D3D"/>
+            <stop offset="100%" stop-color="#F4A93B"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </section>
+
+  <!-- BROWSE -->
+  <section id="browse">
+    <div class="browse-controls">
+      <input type="text" id="search" placeholder="Search a word, a feeling, a reference…">
+      <div class="filter-row" id="leadChips"></div>
+      <div class="filter-row">
+        <select id="bookFilter"><option value="">All books</option></select>
+      </div>
+    </div>
+    <p class="result-count" id="resultCount"></p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- TODAY -->
+  <section id="today">
+    <div class="card">
+      <p class="date" id="todayDate"></p>
+      <span class="lead-tag" id="todayLead">I am</span>
+      <p class="stmt" id="todayStmt">Loading…</p>
+      <p class="ref" id="todayRef"></p>
+    </div>
+    <p class="today-note">One truth a day, same for everyone who opens this today. <button id="toBrowse">See them all →</button></p>
+  </section>
+
+</main>
+
+<footer>I Am In Christ — a study of identity, drawn from Scripture.</footer>
+
+<script>
+const DATA = [
+{lead:"I am", text:"God's child, for I am born again of the incorruptible seed of the Word of God.", ref:"1 Peter 1:23", book:"1 Peter"},
+{lead:"I am", text:"Forgiven of all my sins and washed in the Blood.", ref:"Ephesians 1:7; Hebrews 9:14; Colossians 1:14; 1 John 1:9", book:"Ephesians"},
+{lead:"I am", text:"A new creature in Christ.", ref:"2 Corinthians 5:17", book:"2 Corinthians"},
+{lead:"I am", text:"The temple of the Holy Spirit.", ref:"1 Corinthians 6:19", book:"1 Corinthians"},
+{lead:"I am", text:"Delivered from the power of darkness and translated into God's kingdom.", ref:"Colossians 1:13", book:"Colossians"},
+{lead:"I am", text:"Redeemed from the curse of the law of sin and death.", ref:"1 Peter 1:18-19; Galatians 3:13", book:"1 Peter"},
+{lead:"I am", text:"Blessed.", ref:"Deuteronomy 28:2-12; Galatians 3:9", book:"Deuteronomy"},
+{lead:"I am", text:"A Saint.", ref:"Romans 1:7; 1 Corinthians 1:2; Philippians 1:1", book:"Romans"},
+{lead:"I am", text:"The head and not the tail, above and not beneath.", ref:"Deuteronomy 28:13", book:"Deuteronomy"},
+{lead:"I am", text:"Holy and without blame before Him in love.", ref:"1 Peter 1:16; Ephesians 1:4", book:"1 Peter"},
+{lead:"I am", text:"The Elect of God.", ref:"Colossians 3:12; Romans 8:33", book:"Colossians"},
+{lead:"I am", text:"Established to the end.", ref:"Romans 1:11", book:"Romans"},
+{lead:"I am", text:"Made near to my Heavenly Father by the Blood of Christ.", ref:"Ephesians 2:13", book:"Ephesians"},
+{lead:"I am", text:"Set free.", ref:"John 8:31-33", book:"John"},
+{lead:"I am", text:"Strong in the Lord.", ref:"Ephesians 6:10", book:"Ephesians"},
+{lead:"I am", text:"Dead to sin.", ref:"Romans 6:1, 11; 1 Peter 2:24", book:"Romans"},
+{lead:"I am", text:"More than a conqueror.", ref:"Romans 8:37", book:"Romans"},
+{lead:"I am", text:"Joint heir with Christ.", ref:"Romans 8:13", book:"Romans"},
+{lead:"I am", text:"Sealed with the Holy Spirit of promise.", ref:"Ephesians 1:13", book:"Ephesians"},
+{lead:"I am", text:"In Christ by His doing.", ref:"1 Corinthians 1:30", book:"1 Corinthians"},
+{lead:"I am", text:"Accepted in the Beloved.", ref:"Ephesians 1:6", book:"Ephesians"},
+{lead:"I am", text:"Complete in Him.", ref:"Colossians 2:10", book:"Colossians"},
+{lead:"I am", text:"Crucified with Christ.", ref:"Galatians 2:20", book:"Galatians"},
+{lead:"I am", text:"Alive with Christ.", ref:"Galatians 2:20", book:"Galatians"},
+{lead:"I am", text:"Free from condemnation.", ref:"John 5:24", book:"John"},
+{lead:"I am", text:"Reconciled to God.", ref:"2 Corinthians 5:18", book:"2 Corinthians"},
+{lead:"I am", text:"Qualified to share in His inheritance.", ref:"Colossians 1:12", book:"Colossians"},
+{lead:"I am", text:"Firmly rooted, built up, established in my faith and overflowing with thanksgiving.", ref:"Colossians 2:7", book:"Colossians"},
+{lead:"I am", text:"Born of God, and the evil one does not touch me.", ref:"1 John 5:18", book:"1 John"},
+{lead:"I am", text:"His faithful follower.", ref:"Revelation 17:14; Ephesians 5:1", book:"Revelation"},
+{lead:"I am", text:"A fellow citizen with the saints of the household of God.", ref:"Ephesians 2:19", book:"Ephesians"},
+{lead:"I am", text:"Built upon the foundation of the apostles and prophets, Jesus Christ Himself being the chief cornerstone.", ref:"Ephesians 2:20", book:"Ephesians"},
+{lead:"I am", text:"Overtaken with blessings.", ref:"Deuteronomy 28:2", book:"Deuteronomy"},
+{lead:"I am", text:"An alien and stranger to this world I temporarily live in.", ref:"1 Peter 2:11", book:"1 Peter"},
+{lead:"I am", text:"The enemy of the Devil.", ref:"1 Peter 5:8", book:"1 Peter"},
+{lead:"I am", text:"Now a child of God — I will resemble Christ when He returns.", ref:"1 John 3:1-2", book:"1 John"},
+{lead:"I am", text:"Not the great I AM, but by the grace of God I am what I am.", ref:"1 Corinthians 15:10", book:"1 Corinthians"},
+{lead:"I am", text:"Justified, completely forgiven, and made righteous.", ref:"Romans 5:1", book:"Romans"},
+{lead:"I am", text:"Dead with Christ, and dead to the power of sin's rule over my life.", ref:"Romans 6:1-6", book:"Romans"},
+{lead:"I am", text:"Dead — I no longer live for myself, but for God.", ref:"2 Corinthians 5:14-15", book:"2 Corinthians"},
+{lead:"I am", text:"Bought with a price. I am not my own — I belong to God.", ref:"1 Corinthians 6:19-20", book:"1 Corinthians"},
+{lead:"I am", text:"Established, anointed, and sealed by God in Christ.", ref:"2 Corinthians 1:21", book:"2 Corinthians"},
+{lead:"I am", text:"Given the Holy Spirit as a pledge, a guarantee of my inheritance.", ref:"Ephesians 1:13-14", book:"Ephesians"},
+{lead:"I am", text:"Crucified with Christ, and it is no longer I who lives, but Christ.", ref:"Galatians 2:20", book:"Galatians"},
+{lead:"I am", text:"Chosen in Christ before the foundation of the world.", ref:"Ephesians 1:4", book:"Ephesians"},
+{lead:"I am", text:"Predestined — determined by God — to be a son or daughter.", ref:"Ephesians 1:5", book:"Ephesians"},
+{lead:"I am", text:"Sanctified, and one with the Sanctifier, Christ. He is not ashamed to call me brother or sister.", ref:"Hebrews 2:11", book:"Hebrews"},
+{lead:"I have", text:"Received the Spirit of God into my life, that I might know the things given to me by God.", ref:"1 Corinthians 2:12", book:"1 Corinthians"},
+{lead:"I have", text:"Been redeemed, forgiven, and I am a recipient of His lavish grace.", ref:"Ephesians 1:7", book:"Ephesians"},
+{lead:"I have", text:"Been raised up and seated with Christ in the heavenly realms.", ref:"Ephesians 2:6", book:"Ephesians"},
+{lead:"I have", text:"Christ Himself in me.", ref:"Colossians 1:27", book:"Colossians"},
+{lead:"I have", text:"Been firmly rooted in Christ, and I am now built up in Him.", ref:"Colossians 2:7", book:"Colossians"},
+{lead:"I have", text:"Been buried, raised, and made alive with Christ.", ref:"Colossians 2:12-13", book:"Colossians"},
+{lead:"I have", text:"Been raised up with Christ — my life is now hidden with Christ in God, for Christ is now my life.", ref:"Colossians 3:1-4", book:"Colossians"},
+{lead:"I have", text:"Been given a spirit of power, love, and self-discipline.", ref:"2 Timothy 1:7", book:"2 Timothy"},
+{lead:"I have", text:"Been saved and called, set apart, according to God's doing.", ref:"2 Timothy 1:9", book:"2 Timothy"},
+{lead:"I have", text:"A right to come boldly before the throne to find mercy and grace in time of need.", ref:"Hebrews 4:16", book:"Hebrews"},
+{lead:"I have", text:"Been given exceedingly great and precious promises by God, by which I am a partaker of His Divine Nature.", ref:"2 Peter 1:4", book:"2 Peter"},
+{lead:"I have", text:"The mind of Christ.", ref:"Philippians 2:5; 1 Corinthians 2:16", book:"Philippians"},
+{lead:"I have", text:"Obtained an inheritance.", ref:"Ephesians 1:11", book:"Ephesians"},
+{lead:"I have", text:"Overcome the world.", ref:"1 John 5:4", book:"1 John"},
+{lead:"I have", text:"Everlasting life, and will not be condemned.", ref:"John 5:24", book:"John"},
+{lead:"I have", text:"The peace of God, which passes all understanding.", ref:"Philippians 4:7", book:"Philippians"},
+{lead:"I have", text:"Received power — power of the Holy Spirit, power to lay hands on the sick and see them recover, power to cast out demons, power over all the power of the enemy.", ref:"Mark 16", book:"Mark"},
+{lead:"I may", text:"Approach God with boldness, freedom, and confidence.", ref:"Ephesians 3:12", book:"Ephesians"},
+{lead:"I live", text:"By the law of the Spirit of Life in Christ Jesus.", ref:"Romans 8:2", book:"Romans"},
+{lead:"I walk", text:"In Christ Jesus.", ref:"Colossians 2:6", book:"Colossians"},
+{lead:"I can", text:"Do all things in Christ.", ref:"Philippians 4:13", book:"Philippians"},
+{lead:"My life", text:"Is hid with Christ in God.", ref:"Colossians 3:3", book:"Colossians"},
+{lead:"I shall", text:"Do even greater works than Christ Jesus.", ref:"John 14:12", book:"John"},
+{lead:"I shall", text:"Overcome, because greater is He who is in me than he who is in the world.", ref:"1 John 4:4", book:"1 John"},
+{lead:"I press", text:"Toward the mark for the prize of the high calling of God.", ref:"Philippians 3:14", book:"Philippians"},
+{lead:"I always", text:"Triumph in Christ.", ref:"2 Corinthians 2:14", book:"2 Corinthians"},
+{lead:"I am", text:"His disciple, because I have love for others.", ref:"John 13:34-35", book:"John"},
+{lead:"I am", text:"The light of the world.", ref:"Matthew 5:14", book:"Matthew"},
+{lead:"I am", text:"The salt of the earth.", ref:"Matthew 5:13", book:"Matthew"},
+{lead:"I am", text:"The righteousness of God.", ref:"2 Corinthians 5:21; 1 Peter 2:24", book:"2 Corinthians"},
+{lead:"I am", text:"A partaker of His Divine Nature.", ref:"2 Peter 1:4", book:"2 Peter"},
+{lead:"I am", text:"Called of God.", ref:"2 Timothy 1:9", book:"2 Timothy"},
+{lead:"I am", text:"An ambassador for Christ.", ref:"2 Corinthians 5:20", book:"2 Corinthians"},
+{lead:"I am", text:"God's workmanship, created in Christ Jesus for good works.", ref:"Ephesians 2:10", book:"Ephesians"},
+{lead:"I am", text:"The apple of my Father's eye.", ref:"Deuteronomy 32:10", book:"Deuteronomy"},
+{lead:"I am", text:"Healed by the stripes of Jesus.", ref:"1 Peter 2:25; Isaiah 53:6", book:"1 Peter"},
+{lead:"I am", text:"Being changed into His image.", ref:"2 Corinthians 3:18; Philippians 1:6", book:"2 Corinthians"},
+{lead:"I am", text:"A child of God.", ref:"John 1:12; Romans 8:16", book:"John"},
+{lead:"I am", text:"Christ's friend.", ref:"John 15:15", book:"John"},
+{lead:"I am", text:"Chosen and appointed by Christ to bear His fruit.", ref:"John 15:16", book:"John"},
+{lead:"I am", text:"A slave of righteousness.", ref:"Romans 6:16", book:"Romans"},
+{lead:"I am", text:"Enslaved to God.", ref:"Romans 6:22", book:"Romans"},
+{lead:"I am", text:"A son or daughter of God.", ref:"Romans 8:14-15; Galatians 3:26, 4:6", book:"Romans"},
+{lead:"I am", text:"A temple of God — His Spirit dwells in me.", ref:"1 Corinthians 3:16, 6:19", book:"1 Corinthians"},
+{lead:"I am", text:"Joined to the Lord, and I am one with Him.", ref:"1 Corinthians 6:17", book:"1 Corinthians"},
+{lead:"I am", text:"A member of Christ's Body.", ref:"1 Corinthians 12:27; Ephesians 5:30", book:"1 Corinthians"},
+{lead:"I am", text:"Reconciled to God, and I am a minister of reconciliation.", ref:"2 Corinthians 5:18-19", book:"2 Corinthians"},
+{lead:"I am", text:"One in Christ.", ref:"Galatians 3:26, 28", book:"Galatians"},
+{lead:"I am", text:"An heir of God, since I am a son or daughter of God.", ref:"Galatians 4:6-7", book:"Galatians"},
+{lead:"I am", text:"Righteous and holy.", ref:"Ephesians 4:24", book:"Ephesians"},
+{lead:"I am", text:"A citizen of Heaven, seated in Heaven right now.", ref:"Philippians 3:20; Ephesians 2:6", book:"Philippians"},
+{lead:"I am", text:"An expression of the Life of Christ, because He is my life.", ref:"Colossians 3:4", book:"Colossians"},
+{lead:"I am", text:"Chosen and dearly loved by Christ.", ref:"Ephesians 1:4; 1 Peter 2:9", book:"Ephesians"},
+{lead:"I am", text:"A son or daughter of light, and not of darkness.", ref:"1 Thessalonians 5:5", book:"1 Thessalonians"},
+{lead:"I am", text:"A holy brother or sister, partaker of a Heavenly Calling.", ref:"Hebrews 3:1", book:"Hebrews"},
+{lead:"I am", text:"One of God's living stones, and I am being built up as a spiritual house.", ref:"1 Peter 2:5", book:"1 Peter"},
+{lead:"I am", text:"A Chosen Race, a Royal Priesthood, a Holy Nation, a people for God's own possession, to proclaim the excellence of Him.", ref:"1 Peter 2:9-10", book:"1 Peter"}
+];
+
+/* ---------- shared helpers ---------- */
+function renderCard(item, elLead, elStmt, elRef){
+  elLead.textContent = item.lead;
+  elStmt.textContent = item.text;
+  elRef.textContent = item.ref;
+}
+
+/* ---------- TABS ---------- */
+const tabButtons = document.querySelectorAll('nav.tabs button');
+const sections = document.querySelectorAll('main section');
+function setTab(name){
+  tabButtons.forEach(b => {
+    const on = b.dataset.tab === name;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on);
+  });
+  sections.forEach(s => s.classList.toggle('active', s.id === name));
+}
+tabButtons.forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+document.getElementById('toBrowse').addEventListener('click', () => setTab('browse'));
+
+/* ---------- MEDITATE ---------- */
+let medIndex = 0;
+let medOrder = DATA.map((_, i) => i);
+
+function renderMed(){
+  const item = DATA[medOrder[medIndex]];
+  renderCard(item, document.getElementById('medLead'), document.getElementById('medStmt'), document.getElementById('medRef'));
+  document.getElementById('medCount').textContent = (medIndex + 1) + ' of ' + DATA.length;
+  const pct = medIndex / (DATA.length - 1);
+  const arcLen = 565;
+  const offset = arcLen - (arcLen * pct);
+  document.getElementById('arcFill').setAttribute('stroke-dashoffset', offset);
+  const path = document.getElementById('arcFill');
+  const pt = path.getPointAtLength(arcLen * pct);
+  document.getElementById('arcDot').setAttribute('cx', pt.x);
+  document.getElementById('arcDot').setAttribute('cy', pt.y);
+}
+document.getElementById('medNext').addEventListener('click', () => {
+  medIndex = (medIndex + 1) % DATA.length;
+  renderMed();
+});
+document.getElementById('medPrev').addEventListener('click', () => {
+  medIndex = (medIndex - 1 + DATA.length) % DATA.length;
+  renderMed();
+});
+document.getElementById('medShuffle').addEventListener('click', () => {
+  for(let i = medOrder.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [medOrder[i], medOrder[j]] = [medOrder[j], medOrder[i]];
+  }
+  medIndex = 0;
+  renderMed();
+});
+document.addEventListener('keydown', (e) => {
+  if(!document.getElementById('meditate').classList.contains('active')) return;
+  if(e.key === 'ArrowRight') document.getElementById('medNext').click();
+  if(e.key === 'ArrowLeft') document.getElementById('medPrev').click();
+});
+
+/* ---------- BROWSE ---------- */
+const leadTypes = [...new Set(DATA.map(d => d.lead))];
+const leadChipsEl = document.getElementById('leadChips');
+let activeLead = '';
+const allChip = document.createElement('button');
+allChip.className = 'chip active';
+allChip.textContent = 'All';
+allChip.addEventListener('click', () => { activeLead = ''; setActiveChip(allChip); filterGrid(); });
+leadChipsEl.appendChild(allChip);
+function setActiveChip(el){
+  leadChipsEl.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+leadTypes.forEach(lead => {
+  const chip = document.createElement('button');
+  chip.className = 'chip';
+  chip.textContent = lead;
+  chip.addEventListener('click', () => { activeLead = lead; setActiveChip(chip); filterGrid(); });
+  leadChipsEl.appendChild(chip);
+});
+
+const books = [...new Set(DATA.map(d => d.book))];
+const bookSelect = document.getElementById('bookFilter');
+books.forEach(b => {
+  const opt = document.createElement('option');
+  opt.value = b; opt.textContent = b;
+  bookSelect.appendChild(opt);
+});
+bookSelect.addEventListener('change', filterGrid);
+document.getElementById('search').addEventListener('input', filterGrid);
+
+function filterGrid(){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const book = bookSelect.value;
+  const results = DATA.filter(d => {
+    const matchesQ = !q || d.text.toLowerCase().includes(q) || d.ref.toLowerCase().includes(q) || d.lead.toLowerCase().includes(q);
+    const matchesLead = !activeLead || d.lead === activeLead;
+    const matchesBook = !book || d.book === book;
+    return matchesQ && matchesLead && matchesBook;
+  });
+  const grid = document.getElementById('grid');
+  document.getElementById('resultCount').textContent = results.length + (results.length === 1 ? ' truth' : ' truths');
+  if(results.length === 0){
+    grid.innerHTML = '<div class="empty-state">Nothing matches that search. Try a different word or clear the filters.</div>';
+    return;
+  }
+  grid.innerHTML = results.map(d => `
+    <div class="card">
+      <span class="lead-tag">${d.lead}</span>
+      <p class="stmt">${d.text}</p>
+      <p class="ref">${d.ref}</p>
+    </div>
+  `).join('');
+}
+
+/* ---------- TODAY ---------- */
+function dayHash(){
+  const d = new Date();
+  const key = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+  let hash = 0;
+  for(let i = 0; i < key.length; i++){
+    hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+  }
+  return hash % DATA.length;
+}
+function renderToday(){
+  const item = DATA[dayHash()];
+  renderCard(item, document.getElementById('todayLead'), document.getElementById('todayStmt'), document.getElementById('todayRef'));
+  document.getElementById('todayDate').textContent = new Date().toLocaleDateString(undefined, { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+}
+
+/* ---------- INIT ---------- */
+renderMed();
+filterGrid();
+renderToday();
+</script>
+</body>
+</html>
