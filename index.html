@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="default">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#14132B">
 <title>I Am In Christ — Identity Affirmations</title>
+<meta name="description" content="A Scripture-based study of identity in Christ. Meditate, browse, and reflect on who God says you are.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* ============ TOKENS ============ */
   :root{
     --dawn-void:#14132B;
     --dusk-plum:#3D2A4C;
@@ -18,8 +21,29 @@
     --ink:#2B1B22;
     --ink-soft:#6b5a5e;
     --line:rgba(255,227,176,0.18);
-    --max:860px;
+
+    --surface-glass:rgba(255,248,238,0.09);
+    --surface-night:#1B1730;
+    --text-night:#F3E7D8;
+    --shadow-soft:0 10px 30px rgba(0,0,0,0.25);
+    --shadow-lift:0 22px 60px rgba(0,0,0,0.4);
+    --radius-sm:10px;
+    --radius-md:16px;
+    --radius-lg:24px;
+    --content-max:860px;
+    --content-wide:1120px;
+    --affirmation-scale:1;
+    --nav-h:60px;
   }
+
+  html[data-theme="night"]{
+    --paper:var(--surface-night);
+    --ink:var(--text-night);
+    --ink-soft:rgba(243,231,216,0.68);
+    --dawn-void:#0D0C1C;
+  }
+  html[data-theme="night"] img{ filter:brightness(0.82) saturate(0.92); }
+
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
@@ -29,396 +53,688 @@
     background:var(--dawn-void);
     min-height:100vh;
     -webkit-font-smoothing:antialiased;
+    padding-bottom:0;
   }
   a{color:inherit;}
+  img{max-width:100%;}
+  button{font:inherit;}
   ::selection{background:var(--ember);color:var(--paper);}
 
-  /* ---------- SKY / HERO ---------- */
-  .sky{
+  .visually-hidden{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  :focus-visible{ outline:2px solid var(--amber); outline-offset:2px; }
+
+  /* ============ HERO ============ */
+  .hero{
     position:relative;
     overflow:hidden;
-    padding:64px 24px 40px;
+    min-height:clamp(420px, 62vh, 620px);
+    display:flex;
+    align-items:flex-end;
     background:
-      radial-gradient(ellipse 120% 80% at 50% 115%, var(--amber) 0%, var(--ember) 22%, var(--dusk-plum) 52%, var(--dawn-void) 78%);
-    text-align:center;
+      radial-gradient(ellipse 120% 80% at 50% 115%, var(--amber) 0%, var(--ember) 22%, var(--dusk-plum) 55%, var(--dawn-void) 82%);
   }
-  .sunburst{
-    position:absolute;
-    left:50%;
-    bottom:-10%;
-    width:900px;
-    max-width:220vw;
-    height:900px;
-    transform:translateX(-50%);
-    opacity:0.55;
-    animation:spin 120s linear infinite;
-    pointer-events:none;
+  .hero-photo{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    z-index:0;
   }
-  @keyframes spin{ to{ transform:translateX(-50%) rotate(360deg); } }
-  @media (prefers-reduced-motion:reduce){ .sunburst{ animation:none; } }
-
+  .hero-overlay{
+    position:absolute; inset:0; z-index:1;
+    background:
+      linear-gradient(180deg, rgba(13,12,28,0.72) 0%, rgba(20,19,43,0.5) 38%, rgba(20,19,43,0.35) 60%, rgba(20,19,43,0.92) 100%),
+      radial-gradient(ellipse 90% 60% at 50% 100%, rgba(244,169,59,0.35), transparent 70%);
+  }
+  .hero-vignette{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    box-shadow: inset 0 0 140px 40px rgba(13,12,28,0.55);
+  }
   .sun-disc{
-    position:absolute;
-    left:50%;
-    bottom:-70px;
-    width:150px;
-    height:150px;
-    transform:translateX(-50%);
+    position:absolute; left:50%; bottom:-60px; z-index:1;
+    width:180px; height:180px; transform:translateX(-50%);
     border-radius:50%;
     background:radial-gradient(circle at 40% 35%, #FFF3D6, var(--amber) 55%, var(--ember) 100%);
-    box-shadow:0 0 90px 20px rgba(244,169,59,0.55);
+    box-shadow:0 0 100px 24px rgba(244,169,59,0.4);
+    mix-blend-mode:screen;
+    opacity:0.8;
   }
-
+  .hero-inner{
+    position:relative; z-index:2;
+    width:100%;
+    max-width:var(--content-max);
+    margin:0 auto;
+    padding:32px 24px 40px;
+    text-align:center;
+  }
   .eyebrow{
-    position:relative;
-    z-index:2;
-    font-size:12px;
-    letter-spacing:0.28em;
-    text-transform:uppercase;
-    color:var(--sunglow);
-    opacity:0.75;
-    font-weight:700;
-    margin:0 0 18px;
+    font-size:12px; letter-spacing:0.28em; text-transform:uppercase;
+    color:var(--sunglow); opacity:0.85; font-weight:700; margin:0 0 16px;
   }
   h1{
-    position:relative;
-    z-index:2;
-    font-family:'Fraunces',serif;
-    font-weight:500;
-    font-style:italic;
-    font-size:clamp(2.4rem, 6vw, 4.2rem);
-    line-height:1.05;
-    margin:0 0 14px;
-    color:#fff;
-    text-shadow:0 2px 30px rgba(0,0,0,0.25);
+    font-family:'Fraunces',serif; font-weight:500; font-style:italic;
+    font-size:clamp(2.1rem, 5.4vw, 3.6rem); line-height:1.05;
+    margin:0 0 14px; color:#fff; text-shadow:0 2px 30px rgba(0,0,0,0.35);
   }
-  .sub{
-    position:relative;
-    z-index:2;
-    max-width:520px;
-    margin:0 auto;
-    font-size:15px;
-    line-height:1.6;
-    color:var(--sunglow);
-    opacity:0.85;
+  .hero-sub{
+    max-width:520px; margin:0 auto 28px;
+    font-size:15px; line-height:1.6; color:var(--sunglow); opacity:0.92;
   }
 
-  /* ---------- TABS ---------- */
-  nav.tabs{
-    position:sticky;
-    top:0;
-    z-index:20;
-    display:flex;
-    justify-content:center;
-    gap:4px;
+  .featured{
+    max-width:460px; margin:0 auto 26px;
+    background:var(--surface-glass);
+    border:1px solid rgba(255,227,176,0.22);
+    border-radius:var(--radius-lg);
+    padding:22px 26px;
+    backdrop-filter:blur(6px);
+  }
+  .featured .lead-tag{ background:rgba(255,255,255,0.14); color:#fff; }
+  .featured .stmt{ color:#fff; font-size:clamp(1.15rem, 2.6vw, 1.5rem); margin-bottom:8px; }
+  .featured .ref{ color:rgba(255,255,255,0.75); }
+
+  .hero-ctas{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+  .btn{
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:14px;
+    border-radius:999px; padding:13px 26px; cursor:pointer;
+    border:none; transition:transform .15s, background .2s, opacity .2s;
+  }
+  .btn:active{ transform:scale(0.97); }
+  .btn-primary{ background:linear-gradient(135deg, var(--ember), var(--amber)); color:#1a1310; }
+  .btn-primary:hover{ opacity:0.92; }
+  .btn-ghost{
+    background:transparent; color:#fff; text-decoration:underline;
+    text-underline-offset:4px; padding:13px 10px;
+  }
+
+  /* ============ UTILITY BAR + NAV ============ */
+  .app-bar{
+    position:sticky; top:0; z-index:30;
     background:rgba(20,19,43,0.92);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
-    padding:10px 12px;
+  }
+  .app-bar-inner{
+    max-width:var(--content-wide);
+    margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; padding:8px 16px;
+  }
+  nav.tabs{
+    display:flex; gap:4px;
   }
   nav.tabs button{
-    font-family:'Manrope',sans-serif;
-    font-weight:700;
-    font-size:13px;
-    letter-spacing:0.04em;
-    background:none;
-    border:none;
-    color:var(--sunglow);
-    opacity:0.55;
-    padding:10px 18px;
-    cursor:pointer;
-    border-radius:999px;
+    display:flex; align-items:center; gap:7px;
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:13px;
+    letter-spacing:0.02em;
+    background:none; border:none; color:var(--sunglow); opacity:0.6;
+    padding:9px 16px; cursor:pointer; border-radius:999px;
     transition:opacity .2s, background .2s, color .2s;
+    min-height:40px;
   }
-  nav.tabs button:hover{opacity:0.85;}
-  nav.tabs button.active{
-    opacity:1;
-    background:linear-gradient(135deg, var(--ember), var(--amber));
-    color:#1a1310;
-  }
-  nav.tabs button:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
-    outline:2px solid var(--amber);
-    outline-offset:2px;
+  nav.tabs button svg{ width:16px; height:16px; flex:none; }
+  nav.tabs button:hover{ opacity:0.9; }
+  nav.tabs button[aria-selected="true"]{
+    opacity:1; background:linear-gradient(135deg, var(--ember), var(--amber)); color:#1a1310;
   }
 
-  main{max-width:var(--max); margin:0 auto; padding:40px 20px 90px;}
-  section{display:none;}
-  section.active{display:block; animation:fadeUp .35s ease both;}
-  @keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
-  @media (prefers-reduced-motion:reduce){ section.active{animation:none;} }
+  .util-controls{ display:flex; align-items:center; gap:10px; }
+  .textscale-group{ display:flex; align-items:center; gap:2px; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .textscale-group button{
+    background:transparent; border:none; color:var(--sunglow); opacity:0.75;
+    font-weight:700; font-size:12px; padding:8px 10px; cursor:pointer; min-height:36px; min-width:34px;
+  }
+  .textscale-group button:hover{ opacity:1; background:rgba(255,227,176,0.08); }
+  .theme-toggle{
+    display:flex; align-items:center; gap:6px;
+    background:transparent; border:1px solid var(--line); border-radius:10px;
+    color:var(--sunglow); opacity:0.8; font-weight:700; font-size:12px;
+    padding:8px 12px; cursor:pointer; min-height:36px;
+  }
+  .theme-toggle:hover{ opacity:1; }
 
-  /* ---------- CARD (shared) ---------- */
+  @media (max-width:700px){
+    nav.tabs{ display:none; }
+    .app-bar-inner{ justify-content:center; }
+  }
+
+  /* ============ PHOTO BAND ============ */
+  .photo-band{
+    max-width:var(--content-wide); margin:44px auto; padding:0 20px;
+    display:grid; grid-template-columns:1fr; gap:0;
+  }
+  .photo-band-media{
+    position:relative; width:100%; aspect-ratio:16/7;
+    border-radius:var(--radius-lg); overflow:hidden;
+    background:linear-gradient(135deg, var(--dusk-plum), var(--dawn-void));
+  }
+  .photo-band-media img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .photo-band-caption{
+    text-align:center; max-width:440px; margin:20px auto 0;
+  }
+  .photo-band-caption p:first-child{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:1.2rem; color:#fff; margin:0 0 8px;
+  }
+  .photo-band-caption p:last-child{
+    font-size:13px; line-height:1.6; color:var(--sunglow); opacity:0.8; margin:0;
+  }
+
+  /* ============ MAIN / SECTIONS ============ */
+  main{ max-width:var(--content-max); margin:0 auto; padding:10px 20px 60px; }
+  section[role="tabpanel"]{ display:none; }
+  section[role="tabpanel"].active{ display:block; animation:fadeUp .35s ease both; }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+  @media (prefers-reduced-motion:reduce){ section[role="tabpanel"].active{ animation:none; } }
+
+  .section-intro{ text-align:center; margin:26px 0 30px; }
+  .section-intro h2{
+    font-family:'Fraunces',serif; font-weight:500; font-style:italic;
+    font-size:clamp(1.4rem, 3vw, 1.9rem); color:#fff; margin:0 0 8px;
+  }
+  .section-intro p{ font-size:13.5px; color:var(--sunglow); opacity:0.75; margin:0; max-width:440px; margin:0 auto; }
+
+  /* ============ CARD (shared) ============ */
   .card{
-    background:var(--paper);
-    color:var(--ink);
-    border-radius:22px;
+    background:var(--paper); color:var(--ink);
+    border-radius:var(--radius-lg);
     padding:40px 34px;
-    box-shadow:0 20px 60px rgba(0,0,0,0.35);
-    position:relative;
-    overflow:hidden;
+    box-shadow:var(--shadow-lift);
+    position:relative; overflow:hidden;
+    border-top:4px solid var(--ember);
   }
-  .card::before{
-    content:"";
-    position:absolute;
-    top:-40%; right:-20%;
-    width:260px; height:260px;
-    background:radial-gradient(circle, rgba(232,93,61,0.13), transparent 70%);
-    pointer-events:none;
+  .card.lead-am{ border-top-color:var(--ember); }
+  .card.lead-have{ border-top-color:var(--amber); }
+  .card.lead-can{ border-top-color:#C97BD1; }
+  .card.lead-shall{ border-top-color:#6FB8A8; }
+  .card.lead-other{ border-top-color:#8C9EC9; }
+
+  .quote-mark{
+    position:absolute; top:6px; right:22px;
+    font-family:'Fraunces',serif; font-size:96px; font-weight:600;
+    color:rgba(232,93,61,0.09); line-height:1; pointer-events:none; user-select:none;
   }
   .lead-tag{
-    display:inline-block;
-    font-family:'Manrope',sans-serif;
-    font-weight:800;
-    font-size:11px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--ember);
-    background:rgba(232,93,61,0.1);
-    padding:6px 12px;
-    border-radius:999px;
-    margin-bottom:18px;
+    display:inline-block; font-family:'Manrope',sans-serif; font-weight:800;
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--ember); background:rgba(232,93,61,0.1);
+    padding:6px 12px; border-radius:999px; margin-bottom:18px;
   }
+  .lead-have .lead-tag{ color:#B9761F; background:rgba(244,169,59,0.15); }
+  .lead-can .lead-tag{ color:#9A3FA3; background:rgba(201,123,209,0.15); }
+  .lead-shall .lead-tag{ color:#2E7D68; background:rgba(111,184,168,0.18); }
+  .lead-other .lead-tag{ color:#4C5C8C; background:rgba(140,158,201,0.18); }
+
   .stmt{
-    font-family:'Fraunces',serif;
-    font-weight:500;
-    font-size:clamp(1.4rem, 3.4vw, 2.05rem);
-    line-height:1.32;
-    margin:0 0 22px;
+    font-family:'Fraunces',serif; font-weight:500;
+    font-size:calc(clamp(1.35rem, 3.2vw, 1.95rem) * var(--affirmation-scale));
+    line-height:1.32; margin:0 0 20px;
   }
-  .ref{
-    font-size:13.5px;
-    font-weight:700;
-    color:var(--ink-soft);
-    letter-spacing:0.02em;
+  .ref{ font-size:13.5px; font-weight:700; color:var(--ink-soft); letter-spacing:0.02em; }
+
+  .toolbar{
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; padding-top:20px;
+    border-top:1px solid rgba(43,27,34,0.1);
+  }
+  .toolbar button, .toolbar a{
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:12.5px;
+    padding:9px 14px; border-radius:999px; cursor:pointer;
+    border:1px solid rgba(43,27,34,0.15); background:transparent; color:var(--ink);
+    text-decoration:none; display:inline-flex; align-items:center; gap:6px;
+    min-height:36px;
+  }
+  .toolbar button:hover, .toolbar a:hover{ background:rgba(43,27,34,0.06); }
+  .toolbar button[aria-pressed="true"]{
+    background:var(--ink); color:var(--paper); border-color:var(--ink);
   }
 
-  /* ---------- MEDITATE ---------- */
-  #meditate .card{min-height:280px; display:flex; flex-direction:column; justify-content:center;}
-  .med-controls{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:14px;
-    margin-top:28px;
-  }
+  /* ============ MEDITATE ============ */
+  #meditate .card{ min-height:280px; display:flex; flex-direction:column; justify-content:center; }
+  .med-controls{ display:flex; align-items:center; justify-content:center; gap:12px; margin-top:26px; flex-wrap:wrap; }
   .med-controls button{
-    font-family:'Manrope',sans-serif;
-    font-weight:700;
-    font-size:13px;
-    border:1px solid var(--line);
-    background:rgba(255,227,176,0.06);
-    color:var(--sunglow);
-    padding:11px 20px;
-    border-radius:12px;
-    cursor:pointer;
-    transition:background .2s, transform .15s;
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:13px;
+    border:1px solid var(--line); background:rgba(255,227,176,0.06); color:var(--sunglow);
+    padding:12px 20px; border-radius:12px; cursor:pointer;
+    transition:background .2s, transform .15s; min-height:44px;
   }
-  .med-controls button:hover{background:rgba(255,227,176,0.14);}
-  .med-controls button:active{transform:scale(0.96);}
+  .med-controls button:hover{ background:rgba(255,227,176,0.14); }
+  .med-controls button:active{ transform:scale(0.96); }
   .med-controls button.primary{
-    background:linear-gradient(135deg, var(--ember), var(--amber));
-    color:#1a1310;
-    border:none;
-  }
-  .med-count{
-    text-align:center;
-    font-size:12px;
-    color:var(--sunglow);
-    opacity:0.6;
-    margin-top:10px;
-    letter-spacing:0.04em;
+    background:linear-gradient(135deg, var(--ember), var(--amber)); color:#1a1310; border:none;
   }
 
-  .arc-wrap{margin:34px auto 0; max-width:420px;}
-  .arc-wrap svg{width:100%; height:auto; display:block;}
+  .progress-wrap{ max-width:360px; margin:30px auto 0; text-align:center; }
+  .progress-label{ font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--sunglow); opacity:0.6; margin-bottom:8px; }
+  .progress-track{ height:6px; border-radius:999px; background:rgba(255,227,176,0.14); overflow:hidden; }
+  .progress-fill{ height:100%; border-radius:999px; background:linear-gradient(90deg, var(--ember), var(--amber)); transition:width .3s ease; }
+  @media (prefers-reduced-motion:reduce){ .progress-fill{ transition:none; } }
+  .progress-count{ font-size:12px; color:var(--sunglow); opacity:0.7; margin-top:8px; font-weight:700; }
 
-  /* ---------- BROWSE ---------- */
-  .browse-controls{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    margin-bottom:26px;
+  .completion-panel{
+    display:none;
+    background:var(--paper); color:var(--ink);
+    border-radius:var(--radius-lg); padding:44px 34px; text-align:center;
+    box-shadow:var(--shadow-lift);
   }
+  .completion-panel.show{ display:block; animation:fadeUp .35s ease both; }
+  .completion-panel h3{ font-family:'Fraunces',serif; font-weight:500; font-style:italic; font-size:1.5rem; margin:0 0 10px; }
+  .completion-panel p{ font-size:14px; color:var(--ink-soft); margin:0 0 24px; }
+  .completion-actions{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .completion-actions button{
+    font-weight:700; font-size:13px; padding:11px 18px; border-radius:999px; cursor:pointer;
+    border:1px solid rgba(43,27,34,0.15); background:transparent; color:var(--ink);
+  }
+  .completion-actions button.primary{ background:var(--ink); color:var(--paper); border:none; }
+
+  /* ============ REFLECTION OVERLAY ============ */
+  .reflection-overlay{
+    display:none;
+    position:fixed; inset:0; z-index:100;
+    background:rgba(13,12,28,0.94);
+    align-items:center; justify-content:center; flex-direction:column;
+    padding:32px; text-align:center;
+  }
+  .reflection-overlay.show{ display:flex; }
+  .breathing-ring{
+    width:150px; height:150px; border-radius:50%;
+    border:2px solid rgba(255,227,176,0.4);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:34px;
+    animation:breathe 6s ease-in-out infinite;
+  }
+  @keyframes breathe{
+    0%,100%{ transform:scale(0.88); box-shadow:0 0 0 0 rgba(244,169,59,0.25); }
+    50%{ transform:scale(1.06); box-shadow:0 0 0 18px rgba(244,169,59,0); }
+  }
+  @media (prefers-reduced-motion:reduce){ .breathing-ring{ animation:none; } }
+  .breathing-ring span{ font-family:'Manrope',sans-serif; font-weight:800; font-size:15px; color:var(--sunglow); }
+  .reflection-overlay .stmt{ color:#fff; max-width:560px; font-size:clamp(1.3rem,3.6vw,2rem); }
+  .reflection-overlay .ref{ color:rgba(255,227,176,0.7); margin-bottom:32px; }
+  .reflection-actions{ display:flex; gap:12px; }
+  .reflection-actions button{
+    font-weight:700; font-size:13px; padding:11px 20px; border-radius:999px; cursor:pointer;
+    border:1px solid rgba(255,227,176,0.3); background:transparent; color:var(--sunglow);
+  }
+
+  /* ============ BROWSE ============ */
+  .browse-controls{ display:flex; flex-direction:column; gap:14px; margin-bottom:22px; }
+  .search-field{ position:relative; }
+  .search-field label{ display:block; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--sunglow); opacity:0.6; margin-bottom:6px; font-weight:700; }
+  .search-field .field-row{ position:relative; display:flex; align-items:center; }
+  .search-field svg{ position:absolute; left:14px; width:16px; height:16px; opacity:0.5; pointer-events:none; }
   #search{
-    width:100%;
-    font-family:'Manrope',sans-serif;
-    font-size:15px;
-    padding:14px 18px;
-    border-radius:14px;
-    border:1px solid var(--line);
-    background:rgba(255,227,176,0.06);
-    color:var(--sunglow);
+    width:100%; font-family:'Manrope',sans-serif; font-size:15px;
+    padding:13px 40px 13px 40px; border-radius:14px; border:1px solid var(--line);
+    background:rgba(255,227,176,0.06); color:var(--sunglow);
   }
-  #search::placeholder{color:rgba(255,227,176,0.45);}
-  .filter-row{display:flex; flex-wrap:wrap; gap:8px; align-items:center;}
+  #search::placeholder{ color:rgba(255,227,176,0.45); }
+  #clearSearch{
+    position:absolute; right:8px; background:none; border:none; color:var(--sunglow);
+    opacity:0.6; cursor:pointer; font-size:16px; padding:8px; display:none; min-height:32px; min-width:32px;
+  }
+  #clearSearch.show{ display:block; }
+
+  .filter-row{ display:flex; flex-wrap:nowrap; gap:8px; align-items:center; overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch; }
+  .filter-row.wrap{ flex-wrap:wrap; overflow-x:visible; }
   .chip{
-    font-family:'Manrope',sans-serif;
-    font-size:12.5px;
-    font-weight:700;
-    padding:8px 14px;
-    border-radius:999px;
-    border:1px solid var(--line);
-    background:transparent;
-    color:var(--sunglow);
-    opacity:0.65;
-    cursor:pointer;
-    transition:all .2s;
+    flex:none;
+    font-family:'Manrope',sans-serif; font-size:12.5px; font-weight:700;
+    padding:8px 14px; border-radius:999px; border:1px solid var(--line);
+    background:transparent; color:var(--sunglow); opacity:0.65; cursor:pointer;
+    transition:all .2s; min-height:36px;
   }
-  .chip:hover{opacity:0.9;}
-  .chip.active{
-    opacity:1;
-    background:var(--sunglow);
-    color:var(--dawn-void);
-    border-color:var(--sunglow);
+  .chip:hover{ opacity:0.9; }
+  .chip[aria-pressed="true"]{
+    opacity:1; background:var(--sunglow); color:var(--dawn-void); border-color:var(--sunglow);
   }
   select#bookFilter{
-    font-family:'Manrope',sans-serif;
-    font-size:12.5px;
-    font-weight:700;
-    padding:9px 12px;
-    border-radius:10px;
-    border:1px solid var(--line);
-    background:var(--dawn-void);
-    color:var(--sunglow);
+    font-family:'Manrope',sans-serif; font-size:12.5px; font-weight:700;
+    padding:9px 12px; border-radius:10px; border:1px solid var(--line);
+    background:var(--dawn-void); color:var(--sunglow); min-height:36px;
   }
-  .result-count{
-    font-size:12px;
-    color:var(--sunglow);
-    opacity:0.55;
-    margin:2px 2px 18px;
+  #clearFilters{
+    font-family:'Manrope',sans-serif; font-size:12.5px; font-weight:700;
+    padding:9px 14px; border-radius:10px; border:1px solid var(--line);
+    background:transparent; color:var(--sunglow); cursor:pointer; opacity:0.5;
+    min-height:36px;
   }
-  .grid{display:grid; grid-template-columns:1fr; gap:14px;}
-  .grid .card{padding:24px 26px;}
-  .grid .stmt{font-size:1.08rem; margin-bottom:10px;}
-  .grid .lead-tag{margin-bottom:10px;}
+  #clearFilters:not([hidden]){ opacity:1; }
+  #clearFilters:hover{ background:rgba(255,227,176,0.08); }
+
+  .result-count{ font-size:12px; color:var(--sunglow); opacity:0.55; margin:14px 2px 16px; }
+
+  .grid{ display:grid; grid-template-columns:1fr; gap:14px; }
+  @media (min-width:640px){ .grid{ grid-template-columns:1fr 1fr; } }
+  .grid .card{ padding:24px 24px; border-top-width:3px; }
+  .grid .stmt{ font-size:calc(1.05rem * var(--affirmation-scale)); margin-bottom:10px; }
+  .grid .lead-tag{ margin-bottom:10px; }
+  .grid .toolbar{ margin-top:16px; padding-top:14px; }
+  @media (hover:hover){
+    .grid .card{ transition:transform .18s ease, box-shadow .18s ease; }
+    .grid .card:hover{ transform:translateY(-3px); box-shadow:0 26px 60px rgba(0,0,0,0.4); }
+  }
+
   .empty-state{
-    text-align:center;
-    padding:60px 20px;
-    color:var(--sunglow);
-    opacity:0.55;
-    font-size:14px;
+    text-align:center; padding:56px 20px; color:var(--sunglow); opacity:0.75; font-size:14px;
+  }
+  .empty-state button{
+    margin-top:16px; font-weight:700; font-size:13px; padding:10px 18px; border-radius:999px;
+    border:1px solid var(--line); background:transparent; color:var(--sunglow); cursor:pointer;
   }
 
-  /* ---------- TODAY ---------- */
-  #today .card{text-align:center;}
-  #today .date{
-    font-size:12px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
-    font-weight:800;
-    margin-bottom:16px;
+  /* ============ TODAY ============ */
+  #today .today-layout{ display:grid; grid-template-columns:1fr; gap:0; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-lift); }
+  @media (min-width:760px){ #today .today-layout{ grid-template-columns:1fr 1.15fr; } }
+  .today-photo-wrap{ position:relative; aspect-ratio:16/10; background:linear-gradient(135deg, var(--dusk-plum), var(--dawn-void)); }
+  @media (min-width:760px){ .today-photo-wrap{ aspect-ratio:auto; } }
+  .today-photo-wrap img{ width:100%; height:100%; object-fit:cover; display:block; }
+  #today .card{ border-radius:0; box-shadow:none; text-align:left; border-top:none; }
+  #today .date{ font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-soft); font-weight:800; margin-bottom:14px; }
+  #today .stmt{ font-size:calc(clamp(1.5rem, 3.6vw, 2.1rem) * var(--affirmation-scale)); }
+  .reflect-prompt{
+    margin-top:20px; padding:14px 16px; background:rgba(232,93,61,0.07);
+    border-left:3px solid var(--ember); border-radius:8px; font-size:13.5px; color:var(--ink-soft); font-style:italic;
   }
-  #today .stmt{font-size:clamp(1.6rem, 4vw, 2.3rem);}
-  .today-note{
-    text-align:center;
-    font-size:12.5px;
-    color:var(--sunglow);
-    opacity:0.55;
-    margin-top:20px;
-  }
-  .today-note button{
-    background:none; border:none; color:var(--amber);
-    font-weight:700; cursor:pointer; text-decoration:underline;
-    font-family:'Manrope',sans-serif; font-size:12.5px;
-    padding:0;
-  }
+  .today-footnote{ text-align:center; font-size:12.5px; color:var(--sunglow); opacity:0.6; margin-top:18px; }
 
+  /* ============ FOOTER ============ */
   footer{
-    text-align:center;
-    padding:36px 20px 50px;
-    font-size:12px;
-    color:var(--sunglow);
-    opacity:0.4;
-    letter-spacing:0.03em;
+    text-align:center; padding:50px 20px 40px; border-top:1px solid var(--line); margin-top:20px;
   }
+  footer .foot-title{ font-family:'Fraunces',serif; font-weight:500; font-style:italic; font-size:1.3rem; color:#fff; margin:0 0 6px; }
+  footer .foot-sub{ font-size:12.5px; color:var(--sunglow); opacity:0.7; margin:0 0 2px; }
+  footer .foot-note{ font-size:11.5px; color:var(--sunglow); opacity:0.45; margin:0 0 22px; }
+  .foot-links{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:22px; }
+  .foot-links button{
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:12.5px;
+    padding:9px 16px; border-radius:999px; border:1px solid var(--line);
+    background:transparent; color:var(--sunglow); cursor:pointer; min-height:36px;
+  }
+  .foot-links button:hover{ background:rgba(255,227,176,0.08); }
+  footer svg{ opacity:0.4; }
+
+  /* ============ MOBILE BOTTOM NAV ============ */
+  .bottom-nav{
+    display:none;
+    position:fixed; left:0; right:0; bottom:0; z-index:40;
+    background:rgba(20,19,43,0.96); backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);
+    padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+  }
+  @media (max-width:700px){ .bottom-nav{ display:flex; justify-content:space-around; } }
+  .bottom-nav button{
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; color:var(--sunglow); opacity:0.55;
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:10.5px;
+    padding:6px 18px; cursor:pointer; border-radius:12px; min-height:48px; flex:1;
+  }
+  .bottom-nav button svg{ width:20px; height:20px; }
+  .bottom-nav button[aria-current="true"]{ opacity:1; color:var(--amber); }
+  body.has-bottom-nav{ padding-bottom:70px; }
+
+  /* ============ TOAST ============ */
+  #toastRegion{
+    position:fixed; left:50%; bottom:24px; z-index:200;
+    transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    pointer-events:none;
+  }
+  @media (max-width:700px){ #toastRegion{ bottom:calc(78px + env(safe-area-inset-bottom)); } }
+  .toast{
+    background:var(--ink); color:var(--paper);
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:12.5px;
+    padding:12px 20px; border-radius:999px; box-shadow:var(--shadow-soft);
+    opacity:0; transform:translateY(8px);
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  @media (prefers-reduced-motion:reduce){ .toast{ transition:opacity .01s linear; transform:none; } }
+  .toast.show{ opacity:1; transform:translateY(0); }
 
   @media (max-width:520px){
-    .card{padding:28px 22px;}
-    .med-controls{flex-wrap:wrap;}
+    .card{ padding:26px 20px; }
+    .med-controls{ flex-wrap:wrap; }
   }
 </style>
 </head>
 <body>
 
-<div class="sky">
-  <svg class="sunburst" viewBox="0 0 900 900" aria-hidden="true">
-    <g stroke="#FFE3B0" stroke-width="1.4" opacity="0.5">
-      <!-- rays generated via JS below is overkill; static set is fine -->
-    </g>
-  </svg>
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <!-- Replace this stock-photo URL with the final licensed image -->
+  <img class="hero-photo" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2000&q=85" alt="Warm sunrise over a peaceful landscape" onerror="this.style.display='none'">
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-vignette" aria-hidden="true"></div>
   <div class="sun-disc" aria-hidden="true"></div>
-  <p class="eyebrow">A study in identity</p>
-  <h1>I Am In Christ</h1>
-  <p class="sub">Every line here is a truth Scripture already says about you. Not a mood, not a mantra — a record. Read slowly.</p>
+  <div class="hero-inner">
+    <p class="eyebrow">A study in identity</p>
+    <h1>I Am In Christ</h1>
+    <p class="hero-sub">Every line here is a truth Scripture already says about you. Not a mood, not a mantra — a record. Read slowly.</p>
+
+    <div class="featured">
+      <span class="lead-tag">I am</span>
+      <p class="stmt">Complete in Him.</p>
+      <p class="ref">Colossians 2:10</p>
+    </div>
+
+    <div class="hero-ctas">
+      <button class="btn btn-primary" id="ctaMeditate">Begin Meditating</button>
+      <button class="btn btn-ghost" id="ctaBrowse">Explore Every Truth</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ APP BAR: NAV + UTILITIES ============ -->
+<div class="app-bar">
+  <div class="app-bar-inner">
+    <nav class="tabs" role="tablist" aria-label="Study modes">
+      <button id="tab-meditate" role="tab" aria-selected="true" aria-controls="meditate" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Meditate
+      </button>
+      <button id="tab-browse" role="tab" aria-selected="false" aria-controls="browse" tabindex="-1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        Browse
+      </button>
+      <button id="tab-today" role="tab" aria-selected="false" aria-controls="today" tabindex="-1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="17" r="4"/><path d="M12 2v3M4.5 8.5l1.5 1.5M19.5 8.5 18 10"/></svg>
+        Today
+      </button>
+    </nav>
+
+    <div class="util-controls">
+      <div class="textscale-group" role="group" aria-label="Affirmation text size">
+        <button id="scaleDown" aria-label="Decrease affirmation text size">A−</button>
+        <button id="scaleReset" aria-label="Reset affirmation text size">A</button>
+        <button id="scaleUp" aria-label="Increase affirmation text size">A+</button>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-pressed="false">
+        <span id="themeToggleLabel">Night Reading</span>
+      </button>
+    </div>
+  </div>
 </div>
 
-<nav class="tabs" role="tablist" aria-label="Study modes">
-  <button class="active" data-tab="meditate" role="tab" aria-selected="true">Meditate</button>
-  <button data-tab="browse" role="tab" aria-selected="false">Browse</button>
-  <button data-tab="today" role="tab" aria-selected="false">Today</button>
-</nav>
+<!-- ============ PHOTO BAND ============ -->
+<div class="photo-band">
+  <div class="photo-band-media">
+    <!-- Replace this stock-photo URL with the final licensed image -->
+    <img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=1800&q=85" alt="Golden light breaking through clouds" loading="lazy" decoding="async">
+  </div>
+  <div class="photo-band-caption">
+    <p>Read slowly. Return often.</p>
+    <p>These are not empty affirmations. They are reminders drawn from Scripture.</p>
+  </div>
+</div>
 
 <main>
 
-  <!-- MEDITATE -->
-  <section id="meditate" class="active">
-    <div class="card">
-      <span class="lead-tag" id="medLead">I am</span>
-      <p class="stmt" id="medStmt">Loading…</p>
-      <p class="ref" id="medRef"></p>
+  <!-- ============ MEDITATE ============ -->
+  <section id="meditate" role="tabpanel" aria-labelledby="tab-meditate" class="active" tabindex="0">
+    <div class="section-intro">
+      <h2>One truth at a time.</h2>
+      <p>Move slowly. Read it aloud. Give the words room to settle.</p>
     </div>
-    <div class="med-controls">
-      <button id="medPrev">← Prev</button>
-      <button id="medShuffle">Shuffle</button>
-      <button id="medNext" class="primary">Next →</button>
+
+    <div id="medCardWrap">
+      <div class="card" id="medCard">
+        <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+        <span class="lead-tag" id="medLead">I am</span>
+        <p class="stmt" id="medStmt" aria-live="polite">Loading…</p>
+        <p class="ref" id="medRef"></p>
+        <div class="toolbar">
+          <button id="medSave" aria-pressed="false">Save Truth</button>
+          <button id="medShare">Share</button>
+          <a id="medRead" href="#" target="_blank" rel="noopener noreferrer">Read Passage <span class="visually-hidden">(opens in a new tab)</span></a>
+          <button id="medPause">Pause With This Truth</button>
+        </div>
+      </div>
+
+      <div class="med-controls">
+        <button id="medPrev">← Previous</button>
+        <button id="medSurprise">Surprise Me</button>
+        <button id="medNext" class="primary">Next Truth →</button>
+      </div>
+
+      <div class="progress-wrap">
+        <p class="progress-label">Journey through the collection</p>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" role="progressbar" aria-valuemin="1" aria-valuenow="1" aria-valuemax="104" aria-label="Meditation progress"></div>
+        </div>
+        <p class="progress-count" id="progressCount">Truth 1 of 104</p>
+      </div>
     </div>
-    <p class="med-count" id="medCount"></p>
-    <div class="arc-wrap">
-      <svg viewBox="0 0 400 130" aria-hidden="true">
-        <path d="M 20 120 A 180 180 0 0 1 380 120" fill="none" stroke="rgba(255,227,176,0.18)" stroke-width="2"/>
-        <path id="arcFill" d="M 20 120 A 180 180 0 0 1 380 120" fill="none" stroke="url(#arcGrad)" stroke-width="2" stroke-dasharray="565" stroke-dashoffset="565"/>
-        <circle id="arcDot" cx="20" cy="120" r="7" fill="#FFE3B0"/>
-        <defs>
-          <linearGradient id="arcGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#E85D3D"/>
-            <stop offset="100%" stop-color="#F4A93B"/>
-          </linearGradient>
-        </defs>
-      </svg>
+
+    <div class="completion-panel" id="completionPanel">
+      <h3>You have reflected on every truth in this collection.</h3>
+      <p>There is more here than one sitting can hold. Come back anytime.</p>
+      <div class="completion-actions">
+        <button class="primary" id="beginAgain">Begin Again</button>
+        <button id="shuffleAll">Shuffle the Collection</button>
+        <button id="toBrowseFromDone">Browse All Truths</button>
+      </div>
     </div>
   </section>
 
-  <!-- BROWSE -->
-  <section id="browse">
+  <!-- ============ BROWSE ============ -->
+  <section id="browse" role="tabpanel" aria-labelledby="tab-browse" tabindex="0">
+    <div class="section-intro">
+      <h2>Explore every identity truth.</h2>
+      <p>Search by word, Scripture reference, lead phrase, or Bible book.</p>
+    </div>
+
     <div class="browse-controls">
-      <input type="text" id="search" placeholder="Search a word, a feeling, a reference…">
-      <div class="filter-row" id="leadChips"></div>
-      <div class="filter-row">
+      <div class="search-field">
+        <label for="search">Search truths</label>
+        <div class="field-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="search" placeholder="Search a word, a feeling, a reference…" autocomplete="off">
+          <button id="clearSearch" aria-label="Clear search">×</button>
+        </div>
+      </div>
+
+      <div class="filter-row" id="leadChips" role="group" aria-label="Filter by lead phrase"></div>
+
+      <div class="filter-row wrap">
+        <label for="bookFilter" class="visually-hidden">Filter by Bible book</label>
         <select id="bookFilter"><option value="">All books</option></select>
+        <button class="chip" id="savedOnlyChip" aria-pressed="false">Saved</button>
+        <button id="clearFilters" hidden>Clear Filters</button>
       </div>
     </div>
+
     <p class="result-count" id="resultCount"></p>
     <div class="grid" id="grid"></div>
   </section>
 
-  <!-- TODAY -->
-  <section id="today">
-    <div class="card">
-      <p class="date" id="todayDate"></p>
-      <span class="lead-tag" id="todayLead">I am</span>
-      <p class="stmt" id="todayStmt">Loading…</p>
-      <p class="ref" id="todayRef"></p>
+  <!-- ============ TODAY ============ -->
+  <section id="today" role="tabpanel" aria-labelledby="tab-today" tabindex="0">
+    <div class="section-intro">
+      <h2>A truth for today.</h2>
+      <p>One Scripture-based identity reminder selected for this calendar day.</p>
     </div>
-    <p class="today-note">One truth a day, same for everyone who opens this today. <button id="toBrowse">See them all →</button></p>
+
+    <div class="today-layout">
+      <div class="today-photo-wrap">
+        <!-- Replace this stock-photo URL with the final licensed image -->
+        <img class="today-photo" src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=85" alt="Still lake and mountains in peaceful morning light" loading="lazy" decoding="async">
+      </div>
+      <div class="card">
+        <p class="date" id="todayDate"></p>
+        <span class="lead-tag" id="todayLead">I am</span>
+        <p class="stmt" id="todayStmt" aria-live="polite">Loading…</p>
+        <p class="ref" id="todayRef"></p>
+        <p class="reflect-prompt">Where do you need to live from this truth today?</p>
+        <div class="toolbar">
+          <button id="todaySave" aria-pressed="false">Save Truth</button>
+          <button id="todayShare">Share</button>
+          <a id="todayRead" href="#" target="_blank" rel="noopener noreferrer">Read Passage <span class="visually-hidden">(opens in a new tab)</span></a>
+        </div>
+      </div>
+    </div>
+    <p class="today-footnote">Come back tomorrow for another truth.</p>
   </section>
 
 </main>
 
-<footer>I Am In Christ — a study of identity, drawn from Scripture.</footer>
+<!-- ============ FOOTER ============ -->
+<footer>
+  <p class="foot-title">I Am In Christ</p>
+  <p class="foot-sub">A Scripture-based study of identity.</p>
+  <p class="foot-sub">Read slowly. Return often.</p>
+  <p class="foot-note">Created for personal reflection and Bible study.</p>
+  <div class="foot-links">
+    <button data-goto="meditate">Meditate</button>
+    <button data-goto="browse">Browse</button>
+    <button data-goto="today">Today</button>
+    <button id="backToTop">Back to top</button>
+  </div>
+  <svg width="120" height="16" viewBox="0 0 120 16" aria-hidden="true">
+    <path d="M0 8 Q30 -4 60 8 T120 8" fill="none" stroke="#F4A93B" stroke-width="1.4"/>
+  </svg>
+</footer>
+
+<!-- ============ MOBILE BOTTOM NAV ============ -->
+<nav class="bottom-nav" aria-label="Study modes">
+  <button id="bottomtab-meditate" aria-current="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Meditate
+  </button>
+  <button id="bottomtab-browse" aria-current="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    Browse
+  </button>
+  <button id="bottomtab-today" aria-current="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="17" r="4"/><path d="M12 2v3M4.5 8.5l1.5 1.5M19.5 8.5 18 10"/></svg>
+    Today
+  </button>
+</nav>
+
+<!-- ============ REFLECTION OVERLAY ============ -->
+<div class="reflection-overlay" id="reflectionOverlay" role="dialog" aria-modal="true" aria-label="Quiet reflection">
+  <div class="breathing-ring" aria-hidden="true"><span id="reflectionTimer">0:30</span></div>
+  <span class="lead-tag" id="reflectLead">I am</span>
+  <p class="stmt" id="reflectStmt"></p>
+  <p class="ref" id="reflectRef"></p>
+  <div class="reflection-actions">
+    <button id="reflectRestart">Restart</button>
+    <button id="reflectEnd">End Reflection</button>
+  </div>
+</div>
+
+<!-- ============ TOAST REGION ============ -->
+<div id="toastRegion" aria-live="polite" aria-atomic="true"></div>
 
 <script>
-const DATA = [
+(function(){
+"use strict";
+
+/* ============================================================
+   1. DATA
+   ============================================================ */
+const RAW_DATA = [
 {lead:"I am", text:"God's child, for I am born again of the incorruptible seed of the Word of God.", ref:"1 Peter 1:23", book:"1 Peter"},
 {lead:"I am", text:"Forgiven of all my sins and washed in the Blood.", ref:"Ephesians 1:7; Hebrews 9:14; Colossians 1:14; 1 John 1:9", book:"Ephesians"},
 {lead:"I am", text:"A new creature in Christ.", ref:"2 Corinthians 5:17", book:"2 Corinthians"},
@@ -525,141 +841,722 @@ const DATA = [
 {lead:"I am", text:"A Chosen Race, a Royal Priesthood, a Holy Nation, a people for God's own possession, to proclaim the excellence of Him.", ref:"1 Peter 2:9-10", book:"1 Peter"}
 ];
 
-/* ---------- shared helpers ---------- */
-function renderCard(item, elLead, elStmt, elRef){
-  elLead.textContent = item.lead;
-  elStmt.textContent = item.text;
-  elRef.textContent = item.ref;
+const DATA = RAW_DATA.map(function(item, i){ return Object.assign({ id:i }, item); });
+
+/* ============================================================
+   2. STATE + STORAGE
+   ============================================================ */
+const STORAGE_KEY = "iAmInChristStateV2";
+const VALID_TABS = ["meditate","browse","today"];
+
+function defaultState(){
+  return {
+    activeTab:"meditate",
+    meditateIndex:0,
+    meditateOrder: DATA.map(function(d){ return d.id; }),
+    savedIds: [],
+    textScale:"default",
+    theme:"default"
+  };
 }
 
-/* ---------- TABS ---------- */
-const tabButtons = document.querySelectorAll('nav.tabs button');
-const sections = document.querySelectorAll('main section');
-function setTab(name){
-  tabButtons.forEach(b => {
-    const on = b.dataset.tab === name;
-    b.classList.toggle('active', on);
-    b.setAttribute('aria-selected', on);
+let storageAvailable = true;
+try{
+  const t = "__t__";
+  window.localStorage.setItem(t,"1");
+  window.localStorage.removeItem(t);
+}catch(e){ storageAvailable = false; }
+
+function loadState(){
+  const base = defaultState();
+  if(!storageAvailable) return base;
+  try{
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if(!raw) return base;
+    const parsed = JSON.parse(raw);
+    if(!parsed || typeof parsed !== "object") return base;
+
+    if(VALID_TABS.indexOf(parsed.activeTab) !== -1) base.activeTab = parsed.activeTab;
+
+    if(Array.isArray(parsed.meditateOrder) &&
+       parsed.meditateOrder.length === DATA.length &&
+       parsed.meditateOrder.every(function(n){ return Number.isInteger(n) && n >= 0 && n < DATA.length; })){
+      base.meditateOrder = parsed.meditateOrder;
+    }
+
+    if(Number.isInteger(parsed.meditateIndex) && parsed.meditateIndex >= 0 && parsed.meditateIndex < base.meditateOrder.length){
+      base.meditateIndex = parsed.meditateIndex;
+    }
+
+    if(Array.isArray(parsed.savedIds)){
+      base.savedIds = parsed.savedIds.filter(function(n){ return Number.isInteger(n) && n >= 0 && n < DATA.length; });
+    }
+
+    if(["small","default","large"].indexOf(parsed.textScale) !== -1) base.textScale = parsed.textScale;
+    if(["default","night"].indexOf(parsed.theme) !== -1) base.theme = parsed.theme;
+
+    return base;
+  }catch(e){
+    return defaultState();
+  }
+}
+
+function saveState(){
+  if(!storageAvailable) return;
+  try{
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){ /* quota or blocked — fail silently */ }
+}
+
+const state = loadState();
+
+/* theme hint from system, only if user never explicitly chose */
+(function applyInitialThemeHint(){
+  let hadStoredTheme = false;
+  if(storageAvailable){
+    try{
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      hadStoredTheme = !!(raw && JSON.parse(raw) && JSON.parse(raw).theme);
+    }catch(e){ hadStoredTheme = false; }
+  }
+  if(!hadStoredTheme && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches){
+    state.theme = "night";
+  }
+})();
+
+/* hash takes priority on initial load */
+(function applyInitialHash(){
+  const h = (location.hash || "").replace("#","");
+  if(VALID_TABS.indexOf(h) !== -1) state.activeTab = h;
+})();
+
+const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ============================================================
+   3. HELPERS
+   ============================================================ */
+function $(id){ return document.getElementById(id); }
+function leadClass(lead){
+  if(lead === "I am") return "lead-am";
+  if(lead === "I have") return "lead-have";
+  if(lead === "I can") return "lead-can";
+  if(lead === "I shall") return "lead-shall";
+  return "lead-other";
+}
+function readPassageUrl(ref){
+  return "https://www.biblegateway.com/passage/?search=" + encodeURIComponent(ref);
+}
+function shareText(item){
+  return "I " + item.lead.replace(/^I\s*/,"").toLowerCase() === item.lead.toLowerCase()
+    ? item.lead + " " + item.text + "\n" + item.ref + "\n\nI Am In Christ"
+    : item.lead + " " + item.text + "\n" + item.ref + "\n\nI Am In Christ";
+}
+function isSaved(id){ return state.savedIds.indexOf(id) !== -1; }
+
+/* ============================================================
+   4. TOAST
+   ============================================================ */
+let toastEl = null;
+let toastTimer = null;
+function showToast(message){
+  const region = $("toastRegion");
+  if(!toastEl){
+    toastEl = document.createElement("div");
+    toastEl.className = "toast";
+    region.appendChild(toastEl);
+  }
+  toastEl.textContent = message;
+  requestAnimationFrame(function(){ toastEl.classList.add("show"); });
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){
+    toastEl.classList.remove("show");
+  }, 2600);
+}
+
+/* ============================================================
+   5. TABS (accessible, hash-synced, persisted)
+   ============================================================ */
+const tabButtons = Array.prototype.slice.call(document.querySelectorAll('nav.tabs [role="tab"]'));
+const bottomButtons = {
+  meditate: $("bottomtab-meditate"),
+  browse: $("bottomtab-browse"),
+  today: $("bottomtab-today")
+};
+const panels = {
+  meditate: $("meditate"),
+  browse: $("browse"),
+  today: $("today")
+};
+
+function setActiveTab(name, options){
+  options = options || {};
+  if(VALID_TABS.indexOf(name) === -1) name = "meditate";
+
+  if(reflectionActive) endReflection();
+
+  VALID_TABS.forEach(function(t){
+    const on = t === name;
+    panels[t].classList.toggle("active", on);
+    const topBtn = $("tab-" + t);
+    topBtn.setAttribute("aria-selected", on);
+    topBtn.tabIndex = on ? 0 : -1;
+    bottomButtons[t].setAttribute("aria-current", on);
   });
-  sections.forEach(s => s.classList.toggle('active', s.id === name));
-}
-tabButtons.forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
-document.getElementById('toBrowse').addEventListener('click', () => setTab('browse'));
 
-/* ---------- MEDITATE ---------- */
-let medIndex = 0;
-let medOrder = DATA.map((_, i) => i);
+  state.activeTab = name;
+  saveState();
+
+  if(history.replaceState) history.replaceState(null, "", "#" + name);
+
+  if(options.scroll){
+    const target = panels[name];
+    target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+  }
+  if(options.focusPanel){
+    panels[name].focus({ preventScroll:true });
+  }
+}
+
+tabButtons.forEach(function(btn){
+  btn.addEventListener("click", function(){ setActiveTab(btn.id.replace("tab-",""), {}); });
+});
+Object.keys(bottomButtons).forEach(function(name){
+  bottomButtons[name].addEventListener("click", function(){ setActiveTab(name, { scroll:true }); });
+});
+
+document.querySelector('nav.tabs[role="tablist"]').addEventListener("keydown", function(e){
+  const keys = ["ArrowLeft","ArrowRight","Home","End"];
+  if(keys.indexOf(e.key) === -1) return;
+  e.preventDefault();
+  e.stopPropagation();
+  const currentIndex = tabButtons.findIndex(function(b){ return b.getAttribute("aria-selected") === "true"; });
+  let nextIndex = currentIndex;
+  if(e.key === "ArrowRight") nextIndex = (currentIndex + 1) % tabButtons.length;
+  if(e.key === "ArrowLeft") nextIndex = (currentIndex - 1 + tabButtons.length) % tabButtons.length;
+  if(e.key === "Home") nextIndex = 0;
+  if(e.key === "End") nextIndex = tabButtons.length - 1;
+  const nextName = tabButtons[nextIndex].id.replace("tab-","");
+  setActiveTab(nextName, {});
+  tabButtons[nextIndex].focus();
+});
+
+$("ctaMeditate").addEventListener("click", function(){ setActiveTab("meditate", { scroll:true }); });
+$("ctaBrowse").addEventListener("click", function(){ setActiveTab("browse", { scroll:true }); });
+document.querySelectorAll("[data-goto]").forEach(function(btn){
+  btn.addEventListener("click", function(){ setActiveTab(btn.dataset.goto, { scroll:true }); });
+});
+$("backToTop").addEventListener("click", function(){
+  window.scrollTo({ top:0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+});
+
+window.addEventListener("hashchange", function(){
+  const h = (location.hash || "").replace("#","");
+  if(VALID_TABS.indexOf(h) !== -1 && h !== state.activeTab) setActiveTab(h, {});
+});
+
+/* ============================================================
+   6. MEDITATE
+   ============================================================ */
+let completionShown = false;
+
+function currentMedItem(){
+  return DATA[state.meditateOrder[state.meditateIndex]];
+}
 
 function renderMed(){
-  const item = DATA[medOrder[medIndex]];
-  renderCard(item, document.getElementById('medLead'), document.getElementById('medStmt'), document.getElementById('medRef'));
-  document.getElementById('medCount').textContent = (medIndex + 1) + ' of ' + DATA.length;
-  const pct = medIndex / (DATA.length - 1);
-  const arcLen = 565;
-  const offset = arcLen - (arcLen * pct);
-  document.getElementById('arcFill').setAttribute('stroke-dashoffset', offset);
-  const path = document.getElementById('arcFill');
-  const pt = path.getPointAtLength(arcLen * pct);
-  document.getElementById('arcDot').setAttribute('cx', pt.x);
-  document.getElementById('arcDot').setAttribute('cy', pt.y);
+  const item = currentMedItem();
+  const card = $("medCard");
+  card.className = "card " + leadClass(item.lead);
+  $("medLead").textContent = item.lead;
+  $("medStmt").textContent = item.text;
+  $("medRef").textContent = item.ref;
+  $("medRead").href = readPassageUrl(item.ref);
+  $("medSave").setAttribute("aria-pressed", isSaved(item.id));
+  $("medSave").textContent = isSaved(item.id) ? "Saved" : "Save Truth";
+
+  const total = state.meditateOrder.length;
+  const pos = state.meditateIndex + 1;
+  $("progressCount").textContent = "Truth " + pos + " of " + total;
+  const fill = $("progressFill");
+  fill.style.width = (pos / total * 100) + "%";
+  fill.setAttribute("aria-valuenow", pos);
+  fill.setAttribute("aria-valuemax", total);
+
+  saveState();
 }
-document.getElementById('medNext').addEventListener('click', () => {
-  medIndex = (medIndex + 1) % DATA.length;
-  renderMed();
-});
-document.getElementById('medPrev').addEventListener('click', () => {
-  medIndex = (medIndex - 1 + DATA.length) % DATA.length;
-  renderMed();
-});
-document.getElementById('medShuffle').addEventListener('click', () => {
-  for(let i = medOrder.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [medOrder[i], medOrder[j]] = [medOrder[j], medOrder[i]];
+
+function showCompletion(){
+  completionShown = true;
+  $("medCardWrap").style.display = "none";
+  $("completionPanel").classList.add("show");
+}
+function hideCompletion(){
+  completionShown = false;
+  $("medCardWrap").style.display = "";
+  $("completionPanel").classList.remove("show");
+}
+
+function goToNextTruth(){
+  if(completionShown) return;
+  if(state.meditateIndex >= state.meditateOrder.length - 1){
+    showCompletion();
+    saveState();
+    return;
   }
-  medIndex = 0;
+  state.meditateIndex++;
   renderMed();
-});
-document.addEventListener('keydown', (e) => {
-  if(!document.getElementById('meditate').classList.contains('active')) return;
-  if(e.key === 'ArrowRight') document.getElementById('medNext').click();
-  if(e.key === 'ArrowLeft') document.getElementById('medPrev').click();
+}
+function goToPreviousTruth(){
+  if(completionShown) return;
+  state.meditateIndex = Math.max(0, state.meditateIndex - 1);
+  renderMed();
+}
+function surpriseMe(){
+  if(completionShown) return;
+  if(state.meditateOrder.length <= 1) return;
+  let next;
+  do{ next = Math.floor(Math.random() * state.meditateOrder.length); }
+  while(next === state.meditateIndex);
+  state.meditateIndex = next;
+  renderMed();
+}
+function shuffleMeditationOrder(){
+  const order = DATA.map(function(d){ return d.id; });
+  for(let i = order.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = order[i]; order[i] = order[j]; order[j] = tmp;
+  }
+  state.meditateOrder = order;
+  state.meditateIndex = 0;
+  hideCompletion();
+  renderMed();
+}
+function beginAgain(){
+  state.meditateIndex = 0;
+  hideCompletion();
+  renderMed();
+}
+
+$("medNext").addEventListener("click", goToNextTruth);
+$("medPrev").addEventListener("click", goToPreviousTruth);
+$("medSurprise").addEventListener("click", surpriseMe);
+$("beginAgain").addEventListener("click", beginAgain);
+$("shuffleAll").addEventListener("click", shuffleMeditationOrder);
+$("toBrowseFromDone").addEventListener("click", function(){ setActiveTab("browse", { scroll:true }); });
+
+function isTypingTarget(el){
+  if(!el) return false;
+  const tag = el.tagName ? el.tagName.toLowerCase() : "";
+  return tag === "input" || tag === "select" || tag === "textarea" || el.isContentEditable;
+}
+
+document.addEventListener("keydown", function(e){
+  if(isTypingTarget(document.activeElement)) return;
+  if(reflectionActive){
+    if(e.key === "Escape") endReflection();
+    return;
+  }
+  if(!panels.meditate.classList.contains("active")) return;
+  if(e.key === "ArrowRight") goToNextTruth();
+  if(e.key === "ArrowLeft") goToPreviousTruth();
 });
 
-/* ---------- BROWSE ---------- */
-const leadTypes = [...new Set(DATA.map(d => d.lead))];
-const leadChipsEl = document.getElementById('leadChips');
-let activeLead = '';
-const allChip = document.createElement('button');
-allChip.className = 'chip active';
-allChip.textContent = 'All';
-allChip.addEventListener('click', () => { activeLead = ''; setActiveChip(allChip); filterGrid(); });
-leadChipsEl.appendChild(allChip);
-function setActiveChip(el){
-  leadChipsEl.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
+/* swipe gestures on the meditate card */
+(function initSwipeNavigation(){
+  const zone = $("medCardWrap");
+  let startX = 0, startY = 0, tracking = false;
+  zone.addEventListener("touchstart", function(e){
+    if(e.touches.length !== 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    tracking = true;
+  }, { passive:true });
+  zone.addEventListener("touchend", function(e){
+    if(!tracking) return;
+    tracking = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    const THRESHOLD = 50;
+    if(Math.abs(dx) > THRESHOLD && Math.abs(dy) < 60){
+      if(dx < 0) goToNextTruth(); else goToPreviousTruth();
+    }
+  }, { passive:true });
+})();
+
+/* save / share / pause — meditate toolbar */
+function toggleSavedFor(id){
+  const idx = state.savedIds.indexOf(id);
+  if(idx === -1){ state.savedIds.push(id); showToast("Truth saved."); }
+  else{ state.savedIds.splice(idx,1); showToast("Removed from saved truths."); }
+  saveState();
 }
-leadTypes.forEach(lead => {
-  const chip = document.createElement('button');
-  chip.className = 'chip';
-  chip.textContent = lead;
-  chip.addEventListener('click', () => { activeLead = lead; setActiveChip(chip); filterGrid(); });
+
+async function shareItem(item){
+  const text = item.lead + " " + item.text + "\n" + item.ref + "\n\nI Am In Christ";
+  if(navigator.share){
+    try{ await navigator.share({ text: text, title: "I Am In Christ" }); return; }
+    catch(e){ /* user cancelled or failed — fall through to clipboard */ }
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    try{ await navigator.clipboard.writeText(text); showToast("Truth copied to clipboard."); return; }
+    catch(e){ /* fall through */ }
+  }
+  try{
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    showToast("Truth copied to clipboard.");
+  }catch(e){
+    showToast("Could not copy — please select the text manually.");
+  }
+}
+
+$("medSave").addEventListener("click", function(){
+  const item = currentMedItem();
+  toggleSavedFor(item.id);
+  renderMed();
+  if(!panels.browse.hidden) renderBrowse();
+});
+$("medShare").addEventListener("click", function(){ shareItem(currentMedItem()); });
+
+/* ============================================================
+   7. REFLECTION MODE
+   ============================================================ */
+let reflectionActive = false;
+let reflectionTimerId = null;
+let reflectionSecondsLeft = 30;
+
+function formatTime(s){
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return m + ":" + (sec < 10 ? "0" : "") + sec;
+}
+function tickReflection(){
+  reflectionSecondsLeft--;
+  $("reflectionTimer").textContent = formatTime(Math.max(0, reflectionSecondsLeft));
+  if(reflectionSecondsLeft <= 0) clearInterval(reflectionTimerId);
+}
+function startReflectionTimer(){
+  clearInterval(reflectionTimerId);
+  reflectionSecondsLeft = 30;
+  $("reflectionTimer").textContent = formatTime(reflectionSecondsLeft);
+  reflectionTimerId = setInterval(tickReflection, 1000);
+}
+function beginReflection(){
+  const item = currentMedItem();
+  $("reflectLead").textContent = item.lead;
+  $("reflectStmt").textContent = item.text;
+  $("reflectRef").textContent = item.ref;
+  $("reflectionOverlay").classList.add("show");
+  reflectionActive = true;
+  startReflectionTimer();
+}
+function endReflection(){
+  reflectionActive = false;
+  clearInterval(reflectionTimerId);
+  $("reflectionOverlay").classList.remove("show");
+}
+$("medPause").addEventListener("click", beginReflection);
+$("reflectEnd").addEventListener("click", endReflection);
+$("reflectRestart").addEventListener("click", startReflectionTimer);
+
+/* ============================================================
+   8. BROWSE
+   ============================================================ */
+const LEAD_GROUPS = ["All","I am","I have","I can","I shall","Other"];
+const OTHER_LEADS = ["I may","I live","I walk","My life","I press","I always"];
+let activeLeadGroup = "All";
+let savedOnly = false;
+let searchDebounceId = null;
+
+const leadChipsEl = $("leadChips");
+LEAD_GROUPS.forEach(function(group){
+  const chip = document.createElement("button");
+  chip.className = "chip";
+  chip.type = "button";
+  chip.textContent = group;
+  chip.setAttribute("aria-pressed", group === "All");
+  chip.addEventListener("click", function(){
+    activeLeadGroup = group;
+    leadChipsEl.querySelectorAll(".chip").forEach(function(c){ c.setAttribute("aria-pressed","false"); });
+    chip.setAttribute("aria-pressed","true");
+    renderBrowse();
+  });
   leadChipsEl.appendChild(chip);
 });
 
-const books = [...new Set(DATA.map(d => d.book))];
-const bookSelect = document.getElementById('bookFilter');
-books.forEach(b => {
-  const opt = document.createElement('option');
+const books = Array.from(new Set(DATA.map(function(d){ return d.book; }))).sort(function(a,b){
+  return a.localeCompare(b);
+});
+const bookSelect = $("bookFilter");
+books.forEach(function(b){
+  const opt = document.createElement("option");
   opt.value = b; opt.textContent = b;
   bookSelect.appendChild(opt);
 });
-bookSelect.addEventListener('change', filterGrid);
-document.getElementById('search').addEventListener('input', filterGrid);
+bookSelect.addEventListener("change", renderBrowse);
 
-function filterGrid(){
-  const q = document.getElementById('search').value.trim().toLowerCase();
+$("savedOnlyChip").addEventListener("click", function(){
+  savedOnly = !savedOnly;
+  $("savedOnlyChip").setAttribute("aria-pressed", savedOnly);
+  renderBrowse();
+});
+
+$("search").addEventListener("input", function(){
+  $("clearSearch").classList.toggle("show", $("search").value.length > 0);
+  clearTimeout(searchDebounceId);
+  searchDebounceId = setTimeout(renderBrowse, 160);
+});
+$("clearSearch").addEventListener("click", function(){
+  $("search").value = "";
+  $("clearSearch").classList.remove("show");
+  renderBrowse();
+  $("search").focus();
+});
+$("clearFilters").addEventListener("click", function(){
+  $("search").value = "";
+  $("clearSearch").classList.remove("show");
+  activeLeadGroup = "All";
+  leadChipsEl.querySelectorAll(".chip").forEach(function(c){ c.setAttribute("aria-pressed", c.textContent === "All"); });
+  bookSelect.value = "";
+  savedOnly = false;
+  $("savedOnlyChip").setAttribute("aria-pressed","false");
+  renderBrowse();
+});
+
+function matchesLeadGroup(item){
+  if(activeLeadGroup === "All") return true;
+  if(activeLeadGroup === "Other") return OTHER_LEADS.indexOf(item.lead) !== -1;
+  return item.lead === activeLeadGroup;
+}
+
+function getFilteredTruths(){
+  const q = $("search").value.trim().toLowerCase();
   const book = bookSelect.value;
-  const results = DATA.filter(d => {
-    const matchesQ = !q || d.text.toLowerCase().includes(q) || d.ref.toLowerCase().includes(q) || d.lead.toLowerCase().includes(q);
-    const matchesLead = !activeLead || d.lead === activeLead;
+  return DATA.filter(function(d){
+    const matchesQ = !q ||
+      d.text.toLowerCase().indexOf(q) !== -1 ||
+      d.ref.toLowerCase().indexOf(q) !== -1 ||
+      d.lead.toLowerCase().indexOf(q) !== -1 ||
+      d.book.toLowerCase().indexOf(q) !== -1;
     const matchesBook = !book || d.book === book;
-    return matchesQ && matchesLead && matchesBook;
+    const matchesSaved = !savedOnly || isSaved(d.id);
+    return matchesQ && matchesLeadGroup(d) && matchesBook && matchesSaved;
   });
-  const grid = document.getElementById('grid');
-  document.getElementById('resultCount').textContent = results.length + (results.length === 1 ? ' truth' : ' truths');
+}
+
+function createTruthCard(item){
+  const card = document.createElement("div");
+  card.className = "card " + leadClass(item.lead);
+
+  const tag = document.createElement("span");
+  tag.className = "lead-tag";
+  tag.textContent = item.lead;
+
+  const stmt = document.createElement("p");
+  stmt.className = "stmt";
+  stmt.textContent = item.text;
+
+  const ref = document.createElement("p");
+  ref.className = "ref";
+  ref.textContent = item.ref;
+
+  const toolbar = document.createElement("div");
+  toolbar.className = "toolbar";
+
+  const saveBtn = document.createElement("button");
+  saveBtn.type = "button";
+  saveBtn.dataset.action = "save";
+  saveBtn.dataset.id = item.id;
+  saveBtn.setAttribute("aria-pressed", isSaved(item.id));
+  saveBtn.textContent = isSaved(item.id) ? "Saved" : "Save Truth";
+
+  const shareBtn = document.createElement("button");
+  shareBtn.type = "button";
+  shareBtn.dataset.action = "share";
+  shareBtn.dataset.id = item.id;
+  shareBtn.textContent = "Share";
+
+  const readLink = document.createElement("a");
+  readLink.href = readPassageUrl(item.ref);
+  readLink.target = "_blank";
+  readLink.rel = "noopener noreferrer";
+  readLink.textContent = "Read Passage";
+  const vh = document.createElement("span");
+  vh.className = "visually-hidden";
+  vh.textContent = " (opens in a new tab)";
+  readLink.appendChild(vh);
+
+  toolbar.appendChild(saveBtn);
+  toolbar.appendChild(shareBtn);
+  toolbar.appendChild(readLink);
+
+  card.appendChild(tag);
+  card.appendChild(stmt);
+  card.appendChild(ref);
+  card.appendChild(toolbar);
+  return card;
+}
+
+function renderBrowse(){
+  const results = getFilteredTruths();
+  const grid = $("grid");
+
+  $("resultCount").textContent = results.length + (results.length === 1 ? " truth" : " truths");
+
+  const filtersActive = $("search").value.trim().length > 0 ||
+    activeLeadGroup !== "All" || bookSelect.value !== "" || savedOnly;
+  $("clearFilters").hidden = !filtersActive;
+
+  grid.innerHTML = "";
+
   if(results.length === 0){
-    grid.innerHTML = '<div class="empty-state">Nothing matches that search. Try a different word or clear the filters.</div>';
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    if(savedOnly && state.savedIds.length === 0){
+      empty.innerHTML = "";
+      const p = document.createElement("p");
+      p.textContent = "You have not saved any truths yet.";
+      const btn = document.createElement("button");
+      btn.textContent = "Show All Truths";
+      btn.addEventListener("click", function(){
+        savedOnly = false;
+        $("savedOnlyChip").setAttribute("aria-pressed","false");
+        renderBrowse();
+      });
+      empty.appendChild(p);
+      empty.appendChild(btn);
+    } else {
+      const p = document.createElement("p");
+      p.textContent = "Nothing matches that search. Try a different word or clear the filters.";
+      const btn = document.createElement("button");
+      btn.textContent = "Clear Filters";
+      btn.addEventListener("click", function(){ $("clearFilters").click(); });
+      empty.appendChild(p);
+      empty.appendChild(btn);
+    }
+    grid.appendChild(empty);
     return;
   }
-  grid.innerHTML = results.map(d => `
-    <div class="card">
-      <span class="lead-tag">${d.lead}</span>
-      <p class="stmt">${d.text}</p>
-      <p class="ref">${d.ref}</p>
-    </div>
-  `).join('');
+
+  const frag = document.createDocumentFragment();
+  results.forEach(function(item){ frag.appendChild(createTruthCard(item)); });
+  grid.appendChild(frag);
 }
 
-/* ---------- TODAY ---------- */
-function dayHash(){
-  const d = new Date();
-  const key = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
-  let hash = 0;
-  for(let i = 0; i < key.length; i++){
-    hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+/* event delegation for browse card actions */
+$("grid").addEventListener("click", function(e){
+  const btn = e.target.closest("[data-action]");
+  if(!btn) return;
+  const id = parseInt(btn.dataset.id, 10);
+  const item = DATA[id];
+  if(btn.dataset.action === "save"){
+    toggleSavedFor(id);
+    btn.setAttribute("aria-pressed", isSaved(id));
+    btn.textContent = isSaved(id) ? "Saved" : "Save Truth";
+    if(panels.meditate.classList.contains("active")) renderMed();
+    if(savedOnly) renderBrowse();
+  } else if(btn.dataset.action === "share"){
+    shareItem(item);
   }
+});
+
+/* ============================================================
+   9. TODAY
+   ============================================================ */
+function dayKey(){
+  const d = new Date();
+  return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+}
+function dayHash(){
+  const key = dayKey();
+  let hash = 0;
+  for(let i = 0; i < key.length; i++){ hash = (hash * 31 + key.charCodeAt(i)) >>> 0; }
   return hash % DATA.length;
 }
-function renderToday(){
-  const item = DATA[dayHash()];
-  renderCard(item, document.getElementById('todayLead'), document.getElementById('todayStmt'), document.getElementById('todayRef'));
-  document.getElementById('todayDate').textContent = new Date().toLocaleDateString(undefined, { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-}
+function currentTodayItem(){ return DATA[dayHash()]; }
 
-/* ---------- INIT ---------- */
-renderMed();
-filterGrid();
-renderToday();
+function renderToday(){
+  const item = currentTodayItem();
+  $("todayDate").textContent = new Date().toLocaleDateString(undefined, { weekday:"long", year:"numeric", month:"long", day:"numeric" });
+  $("todayLead").textContent = item.lead;
+  $("todayStmt").textContent = item.text;
+  $("todayRef").textContent = item.ref;
+  $("todayRead").href = readPassageUrl(item.ref);
+  $("todaySave").setAttribute("aria-pressed", isSaved(item.id));
+  $("todaySave").textContent = isSaved(item.id) ? "Saved" : "Save Truth";
+}
+$("todaySave").addEventListener("click", function(){
+  const item = currentTodayItem();
+  toggleSavedFor(item.id);
+  renderToday();
+  if(panels.meditate.classList.contains("active")) renderMed();
+});
+$("todayShare").addEventListener("click", function(){ shareItem(currentTodayItem()); });
+
+/* ============================================================
+   10. TEXT SIZE
+   ============================================================ */
+const SCALE_VALUES = { small:0.88, default:1, large:1.16 };
+function setTextScale(scale){
+  if(!(scale in SCALE_VALUES)) scale = "default";
+  state.textScale = scale;
+  document.documentElement.style.setProperty("--affirmation-scale", SCALE_VALUES[scale]);
+  saveState();
+}
+$("scaleDown").addEventListener("click", function(){
+  const order = ["small","default","large"];
+  const idx = Math.max(0, order.indexOf(state.textScale) - 1);
+  setTextScale(order[idx]);
+  showToast("Text size decreased.");
+});
+$("scaleUp").addEventListener("click", function(){
+  const order = ["small","default","large"];
+  const idx = Math.min(order.length - 1, order.indexOf(state.textScale) + 1);
+  setTextScale(order[idx]);
+  showToast("Text size increased.");
+});
+$("scaleReset").addEventListener("click", function(){
+  setTextScale("default");
+  showToast("Text size reset.");
+});
+
+/* ============================================================
+   11. THEME
+   ============================================================ */
+function setTheme(theme){
+  state.theme = theme;
+  document.documentElement.setAttribute("data-theme", theme);
+  $("themeToggle").setAttribute("aria-pressed", theme === "night");
+  $("themeToggleLabel").textContent = theme === "night" ? "Day Reading" : "Night Reading";
+  saveState();
+}
+$("themeToggle").addEventListener("click", function(){
+  const next = state.theme === "night" ? "default" : "night";
+  setTheme(next);
+  showToast(next === "night" ? "Night reading enabled." : "Day reading enabled.");
+});
+
+/* ============================================================
+   12. INIT
+   ============================================================ */
+function init(){
+  setTheme(state.theme);
+  setTextScale(state.textScale);
+  setActiveTab(state.activeTab, {});
+  renderMed();
+  renderBrowse();
+  renderToday();
+  if(document.body) document.body.classList.add("has-bottom-nav");
+}
+init();
+
+})();
 </script>
 </body>
 </html>
